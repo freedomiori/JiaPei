@@ -22,11 +22,11 @@ POST api/Account/GetToken
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PhoneInfoModel | 
-`MID` | String | 
-`V` | String | 
-`Mtype` | String | 
-`W` | Int32 | 
-`H` | Int32 | 
+`MID` | String | 手机唯一码
+`V` | String | 版本号
+`Mtype` | String | 手机类型
+`W` | Int32 | 分辨率(宽)
+`H` | Int32 | 分辨率(高)
 
 
 **Returns**
@@ -37,7 +37,7 @@ variable | datatype | description
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Guid | 
+`this` | Guid | Token
 
 
 ### GetInfo
@@ -61,9 +61,9 @@ POST api/Account/GetInfo
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
-`UserID` | Int32 | 
-`UserName` | String | 
-`Phone` | String | 
+`UserID` | Int32 | 用户ID
+`UserName` | String | 用户名
+`Phone` | String | 手机号
 
 
 ### Login
@@ -84,8 +84,8 @@ POST api/Account/Login
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | LoginModel | 
-`UName` | String | 
-`Password` | String | 
+`UName` | String | 用户名/手机号
+`Password` | String | 密码
 
 
 **Returns**
@@ -101,9 +101,9 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
-`UserID` | Int32 | 
-`UserName` | String | 
-`Phone` | String | 
+`UserID` | Int32 | 用户ID
+`UserName` | String | 用户名
+`Phone` | String | 手机号
 
 
 ### Logout
@@ -122,7 +122,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 是否成功
 
 
 ### SendVCodeForRegister
@@ -142,7 +142,7 @@ POST api/Account/SendVCodeForRegister
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PhoneModel | 
-`Phone` | String | 
+`Phone` | String | 手机号
 
 
 **Returns**
@@ -153,7 +153,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 是否成功
 
 
 ### Register
@@ -176,10 +176,10 @@ POST api/Account/Register
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | RegisterModel | 
-`UserName` | String | 
-`Password` | String | 
-`Phone` | String | 
-`VCode` | String | 
+`UserName` | String | 用户名
+`Password` | String | 密码
+`Phone` | String | 手机号
+`VCode` | String | 验证码
 
 
 **Returns**
@@ -190,7 +190,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 是否成功
 
 
 ### SendVCodeForForgetPass
@@ -210,7 +210,7 @@ POST api/Account/SendVCodeForForgetPass
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UNameModel | 
-`UName` | String | 
+`UName` | String | 用户名/手机号
 
 
 **Returns**
@@ -221,7 +221,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 是否成功
 
 
 ### ResetPassword
@@ -243,9 +243,9 @@ POST api/Account/ResetPassword
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ResetPasswordModel | 
-`UName` | String | 
-`Password` | String | 
-`VCode` | String | 
+`UName` | String | 用户名/手机号
+`Password` | String | 密码
+`VCode` | String | 验证码
 
 
 **Returns**
@@ -256,4 +256,4 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 是否成功
