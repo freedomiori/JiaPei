@@ -24,9 +24,9 @@ variable | datatype | description
 `this` | PhoneInfoModel | 
 `MID` | String | 手机唯一码
 `V` | String | 版本号
-`Mtype` | String | 手机类型
-`W` | Int32 | 分辨率(宽)
-`H` | Int32 | 分辨率(高)
+`Mtype` | String | 手机型号
+`W` | Int32 | 宽度
+`H` | Int32 | 长度
 
 
 **Returns**
@@ -37,7 +37,7 @@ variable | datatype | description
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Guid | Token
+`this` | Guid | 
 
 
 ### GetInfo
@@ -62,7 +62,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
 `UserID` | Int32 | 用户ID
-`UserName` | String | 用户名
+`UserName` | String | 昵称
 `Phone` | String | 手机号
 
 
@@ -76,7 +76,7 @@ POST api/Account/Login
 
 ```json
 {
-"UName":"",
+"Phone":"",
 "Password":""
 }
 ```
@@ -84,7 +84,7 @@ POST api/Account/Login
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | LoginModel | 
-`UName` | String | 用户名/手机号
+`Phone` | String | 手机号
 `Password` | String | 密码
 
 
@@ -102,7 +102,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
 `UserID` | Int32 | 用户ID
-`UserName` | String | 用户名
+`UserName` | String | 昵称
 `Phone` | String | 手机号
 
 
@@ -156,18 +156,16 @@ variable | datatype | description
 `this` | Boolean | 是否成功
 
 
-### Register
+### ValidateRegVCode
 
-This http POST will be called to 注册用户并登录
+This http POST will be called to 验证手机注册验证码
 
 ```json
-POST api/Account/Register
+POST api/Account/ValidateRegVCode
 ```
 
 ```json
 {
-"UserName":"",
-"Password":"",
 "Phone":"",
 "VCode":""
 }
@@ -175,9 +173,7 @@ POST api/Account/Register
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | RegisterModel | 
-`UserName` | String | 用户名
-`Password` | String | 密码
+`this` | ValidateRegModel | 
 `Phone` | String | 手机号
 `VCode` | String | 验证码
 
@@ -193,6 +189,39 @@ variable | datatype | description
 `this` | Boolean | 是否成功
 
 
+### Register
+
+This http POST will be called to 注册用户并登录
+
+```json
+POST api/Account/Register
+```
+
+```json
+{
+"UserName":"",
+"Password":""
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | RegisterModel | 
+`UserName` | String | 昵称
+`Password` | String | 密码
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
 ### SendVCodeForForgetPass
 
 This http POST will be called to 发送忘记密码验证码
@@ -203,14 +232,14 @@ POST api/Account/SendVCodeForForgetPass
 
 ```json
 {
-"UName":""
+"Phone":""
 }
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | UNameModel | 
-`UName` | String | 用户名/手机号
+`this` | PhoneModel | 
+`Phone` | String | 手机号
 
 
 **Returns**
@@ -234,7 +263,7 @@ POST api/Account/ResetPassword
 
 ```json
 {
-"UName":"",
+"Phone":"",
 "Password":"",
 "VCode":""
 }
@@ -243,8 +272,8 @@ POST api/Account/ResetPassword
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ResetPasswordModel | 
-`UName` | String | 用户名/手机号
-`Password` | String | 密码
+`Phone` | String | 手机号
+`Password` | String | 新密码
 `VCode` | String | 验证码
 
 
