@@ -5,7 +5,7 @@
 This http GET will be called to 获取小图片
 
 ```json
-GET UI/SImage/{filename}
+GET UI/SImage?id={filename}
 ```
 
 ------------------
@@ -14,7 +14,7 @@ GET UI/SImage/{filename}
 This http GET will be called to 获取中图片
 
 ```json
-GET UI/MImage/{filename}
+GET UI/MImage?id={filename}
 ```
 
 ------------------
@@ -23,5 +23,5 @@ GET UI/MImage/{filename}
 This http GET will be called to 获取大图片
 
 ```json
-GET UI/BImage/{filename}
+GET UI/BImage?id={filename}
 ```
