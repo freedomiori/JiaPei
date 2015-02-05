@@ -603,6 +603,7 @@ POST api/User/UpdateUserInfo
 ```json
 {
 "UserName":"",
+"OldPassword":"",
 "Password":"",
 "AreaID":##,
 "Gender":##
@@ -613,6 +614,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UpdateUserModel | 
 `UserName` | String | 
+`OldPassword` | String | 
 `Password` | String | 
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Nullable < Int32 >  | 
@@ -695,7 +697,8 @@ variable | datatype | description
  "NewsID":##,
  "Title":"",
  "Summary":"",
- "UsefulVal":##
+ "UsefulVal":##,
+ "HasCollect":true
  }
 ]
 ```
@@ -707,6 +710,7 @@ variable | datatype | description
 `[ ].Title` | String | 
 `[ ].Summary` | String | 
 `[ ].UsefulVal` | Int32 | 
+`[ ].HasCollect` | Boolean | 
 
 
 ### GetNewsListTop
