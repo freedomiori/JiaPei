@@ -1,3 +1,4 @@
+
 ## Account
 
 ### GetToken
@@ -55,7 +56,8 @@ POST api/Account/GetInfo
 "UserName":"",
 "Phone":"",
 "AreaID":##,
-"Gender":##
+"Gender":##,
+"PhotoFileName":""
 }
 ```
 
@@ -67,6 +69,7 @@ variable | datatype | description
 `Phone` | String | 
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Int32 | 
+`PhotoFileName` | String | 
 
 
 ### Login
@@ -99,7 +102,8 @@ variable | datatype | description
 "UserName":"",
 "Phone":"",
 "AreaID":##,
-"Gender":##
+"Gender":##,
+"PhotoFileName":""
 }
 ```
 
@@ -111,6 +115,7 @@ variable | datatype | description
 `Phone` | String | 
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Int32 | 
+`PhotoFileName` | String | 
 
 
 ### Logout
@@ -226,7 +231,8 @@ variable | datatype | description
 "UserName":"",
 "Phone":"",
 "AreaID":##,
-"Gender":##
+"Gender":##,
+"PhotoFileName":""
 }
 ```
 
@@ -238,6 +244,7 @@ variable | datatype | description
 `Phone` | String | 
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Int32 | 
+`PhotoFileName` | String | 
 
 
 ### SendVCodeForForgetPass
@@ -306,6 +313,250 @@ variable | datatype | description
 `this` | Boolean | 
 
 
+## Topic
+
+### SendGood
+
+This http POST will be called to 点赞
+
+```json
+POST api/Topic/SendGood/{id}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`id` | Int32 | 话题ID
+
+**Returns**
+
+```json
+##
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Int32 | 
+
+
+### SendNotGood
+
+This http POST will be called to 取消点赞
+
+```json
+POST api/Topic/SendNotGood/{id}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`id` | Int32 | 话题ID
+
+**Returns**
+
+```json
+##
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Int32 | 
+
+
+### Delete
+
+This http POST will be called to 删除话题
+
+```json
+POST api/Topic/Delete/{id}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`id` | Int32 | 话题ID
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+### GetMyTopicList
+
+This http POST will be called to 获取我说的列表
+
+```json
+POST api/Topic/GetMyTopicList
+```
+
+```json
+{
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetMyTopicListModel | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "ID":##,
+ "ChannelID":##,
+ "ChannelTitle":"",
+ "GoodVal":##,
+ "UserID":##,
+ "FeedbackNum":##,
+ "PublishOn":"yyyy-MM-dd HH:mm:ss",
+ "TopicDetailItems":[
+   {
+   "Type":"",
+   "Content":"",
+   "SortNum":##
+   }
+  ]
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < TopicDetailModel >  | 
+`[ ].ID` | Int32 | 
+`[ ].ChannelID` | Int32 | 
+`[ ].ChannelTitle` | String | 
+`[ ].GoodVal` | Int32 | 
+`[ ].UserID` | Int32 | 
+`[ ].FeedbackNum` | Int32 | 
+`[ ].PublishOn` | DateTime | 
+`[ ].TopicDetailItems` | IList < ContentItemModel >  | 
+`[ ].TopicDetailItems[ ].Type` | String | 
+`[ ].TopicDetailItems[ ].Content` | String | 
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+
+
+### GetFeedbackList
+
+This http POST will be called to 获取评论列表
+
+```json
+POST api/Topic/GetFeedbackList
+```
+
+```json
+{
+"TopicID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetFeedbackListModel | 
+`TopicID` | Int32 | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "ID":##,
+ "ChannelID":##,
+ "ChannelTitle":"",
+ "GoodVal":##,
+ "UserID":##,
+ "FeedbackNum":##,
+ "PublishOn":"yyyy-MM-dd HH:mm:ss",
+ "TopicDetailItems":[
+   {
+   "Type":"",
+   "Content":"",
+   "SortNum":##
+   }
+  ]
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < TopicDetailModel >  | 
+`[ ].ID` | Int32 | 
+`[ ].ChannelID` | Int32 | 
+`[ ].ChannelTitle` | String | 
+`[ ].GoodVal` | Int32 | 
+`[ ].UserID` | Int32 | 
+`[ ].FeedbackNum` | Int32 | 
+`[ ].PublishOn` | DateTime | 
+`[ ].TopicDetailItems` | IList < ContentItemModel >  | 
+`[ ].TopicDetailItems[ ].Type` | String | 
+`[ ].TopicDetailItems[ ].Content` | String | 
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+
+
+### GetMyTopicMessages
+
+This http POST will be called to 获取我的评论消息
+
+```json
+POST api/Topic/GetMyTopicMessages
+```
+
+**Returns**
+
+```json
+[
+ {
+ "HostTopicID":##,
+ "HostPublisherID":##,
+ "HostTopicContent":"",
+ "HostContentType":"",
+ "TopicID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
+ "TopicContent":"",
+ "ContentType":"",
+ "IsGood":true,
+ "CreateOn":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < TopicMessageModel >  | 
+`[ ].HostTopicID` | Int32 | 
+`[ ].HostPublisherID` | Int32 | 
+`[ ].HostTopicContent` | String | 
+`[ ].HostContentType` | String | 
+`[ ].TopicID` | Nullable < Int32 >  | 
+`[ ].Publisher` | Publisher | 
+`[ ].Publisher.UserID` | Int32 | 
+`[ ].Publisher.UserName` | String | 
+`[ ].Publisher.PhotoFileName` | String | 
+`[ ].TopicContent` | String | 
+`[ ].ContentType` | String | 
+`[ ].IsGood` | Boolean | 
+`[ ].CreateOn` | DateTime | 
+
+
 ## User
 
 ### UploadPhoto
@@ -319,7 +570,7 @@ POST api/User/UploadPhoto
 ```json
 {
 "ImageExt":"",
-"Image":"0x89504E47..."
+"Image":""
 }
 ```
 
@@ -327,7 +578,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ImageModel | 
 `ImageExt` | String | 
-`Image` | Byte[] | 
+`Image` | String | 
 
 
 **Returns**
@@ -366,6 +617,192 @@ variable | datatype | description
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Nullable < Int32 >  | 
 
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+## News
+
+### GetAllNewsTypes
+
+This http POST will be called to 获取咨询类目列表
+
+```json
+POST api/News/GetAllNewsTypes
+```
+
+**Returns**
+
+```json
+[
+ {
+ "NewsTypeID":##,
+ "TypeName":"",
+ "ChannelID":##,
+ "SortNum":##,
+ "Status":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsTypeModel >  | 
+`[ ].NewsTypeID` | Int32 | 
+`[ ].TypeName` | String | 
+`[ ].ChannelID` | Int32 | 
+`[ ].SortNum` | Int32 | 
+`[ ].Status` | Int32 | 
+
+
+### GetNewsList
+
+This http POST will be called to 获取咨询列表，带分页
+
+```json
+POST api/News/GetNewsList
+```
+
+```json
+{
+"NewsTypeID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetNewsListModel | 
+`NewsTypeID` | Int32 | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "NewsID":##,
+ "Title":"",
+ "Summary":"",
+ "UsefulVal":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsMainModel >  | 
+`[ ].NewsID` | Int32 | 
+`[ ].Title` | String | 
+`[ ].Summary` | String | 
+`[ ].UsefulVal` | Int32 | 
+
+
+### GetNewsListTop
+
+This http POST will be called to 获取咨询列表表头
+
+```json
+POST api/News/GetNewsListTop
+```
+
+```json
+{
+"NewsTypeID":##,
+"Count":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetNewsListTopModel | 
+`NewsTypeID` | Int32 | 
+`Count` | Int32 | 
+
+
+**Returns**
+
+```json
+{
+"TopicID":##,
+"UserPhotos":[
+""
+ ]
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsListTopModel | 
+`TopicID` | Int32 | 
+`UserPhotos` | IList < String >  | 
+
+
+### GetNewsDetail
+
+This http POST will be called to 获取咨询详细
+
+```json
+POST api/News/GetNewsDetail/{id}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`id` | Int32 | 咨询ID
+
+**Returns**
+
+```json
+{
+"Title":"",
+"NewsTypeName":"",
+"NewsDetailItems":[
+  {
+  "Type":"",
+  "Content":"",
+  "SortNum":##
+  }
+ ],
+"NextNewsID":##,
+"NextNewsTitle":""
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsDetailModel | 
+`Title` | String | 
+`NewsTypeName` | String | 
+`NewsDetailItems` | IList < ContentItemModel >  | 
+`NewsDetailItems[ ].Type` | String | 
+`NewsDetailItems[ ].Content` | String | 
+`NewsDetailItems[ ].SortNum` | Int32 | 
+`NextNewsID` | Nullable < Int32 >  | 
+`NextNewsTitle` | String | 
+
+
+### SetCurrentStatus
+
+This http POST will be called to 设置当前状态，正在哪个咨询类目
+
+```json
+POST api/News/SetCurrentStatus/{id}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`id` | Int32 | 咨询类目ID
 
 **Returns**
 
