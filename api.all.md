@@ -320,12 +320,20 @@ variable | datatype | description
 This http POST will be called to 点赞
 
 ```json
-POST api/Topic/SendGood/{id}
+POST api/Topic/SendGood
+```
+
+```json
+{
+"TopicID":##
+}
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`id` | Int32 | 话题ID
+`this` | TopicIDModel | 
+`TopicID` | Int32 | 
+
 
 **Returns**
 
@@ -343,12 +351,20 @@ variable | datatype | description
 This http POST will be called to 取消点赞
 
 ```json
-POST api/Topic/SendNotGood/{id}
+POST api/Topic/SendNotGood
+```
+
+```json
+{
+"TopicID":##
+}
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`id` | Int32 | 话题ID
+`this` | TopicIDModel | 
+`TopicID` | Int32 | 
+
 
 **Returns**
 
@@ -366,12 +382,20 @@ variable | datatype | description
 This http POST will be called to 删除话题
 
 ```json
-POST api/Topic/Delete/{id}
+POST api/Topic/Delete
+```
+
+```json
+{
+"TopicID":##
+}
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`id` | Int32 | 话题ID
+`this` | TopicIDModel | 
+`TopicID` | Int32 | 
+
 
 **Returns**
 
@@ -401,7 +425,7 @@ POST api/Topic/GetMyTopicList
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | GetMyTopicListModel | 
+`this` | PagedModel | 
 `Skip` | Int32 | 
 `Take` | Int32 | 
 
@@ -412,11 +436,13 @@ variable | datatype | description
 [
  {
  "ID":##,
+ "ParentTopicID":##,
  "ChannelID":##,
  "ChannelTitle":"",
  "GoodVal":##,
  "UserID":##,
  "FeedbackNum":##,
+ "CanGood":true,
  "PublishOn":"yyyy-MM-dd HH:mm:ss",
  "TopicDetailItems":[
    {
@@ -433,11 +459,13 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
 `[ ].ID` | Int32 | 
+`[ ].ParentTopicID` | Nullable < Int32 >  | 
 `[ ].ChannelID` | Int32 | 
 `[ ].ChannelTitle` | String | 
 `[ ].GoodVal` | Int32 | 
 `[ ].UserID` | Int32 | 
 `[ ].FeedbackNum` | Int32 | 
+`[ ].CanGood` | Boolean | 
 `[ ].PublishOn` | DateTime | 
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 
@@ -475,11 +503,13 @@ variable | datatype | description
 [
  {
  "ID":##,
+ "ParentTopicID":##,
  "ChannelID":##,
  "ChannelTitle":"",
  "GoodVal":##,
  "UserID":##,
  "FeedbackNum":##,
+ "CanGood":true,
  "PublishOn":"yyyy-MM-dd HH:mm:ss",
  "TopicDetailItems":[
    {
@@ -496,11 +526,13 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
 `[ ].ID` | Int32 | 
+`[ ].ParentTopicID` | Nullable < Int32 >  | 
 `[ ].ChannelID` | Int32 | 
 `[ ].ChannelTitle` | String | 
 `[ ].GoodVal` | Int32 | 
 `[ ].UserID` | Int32 | 
 `[ ].FeedbackNum` | Int32 | 
+`[ ].CanGood` | Boolean | 
 `[ ].PublishOn` | DateTime | 
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 
@@ -515,6 +547,18 @@ This http POST will be called to 获取我的评论消息
 ```json
 POST api/Topic/GetMyTopicMessages
 ```
+
+```json
+{
+"Count":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | CountModel | 
+`Count` | Int32 | 
+
 
 **Returns**
 
@@ -555,6 +599,454 @@ variable | datatype | description
 `[ ].ContentType` | String | 
 `[ ].IsGood` | Boolean | 
 `[ ].CreateOn` | DateTime | 
+
+
+### GetTopMessages
+
+This http POST will be called to 获取最新评论消息条数及评论人头像列表
+
+```json
+POST api/Topic/GetTopMessages
+```
+
+```json
+{
+"Count":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | CountModel | 
+`Count` | Int32 | 
+
+
+**Returns**
+
+```json
+{
+"Count":##,
+"UserPhotos":[
+""
+ ]
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | TopicsListTopModel | 
+`Count` | Int32 | 
+`UserPhotos` | IList < String >  | 
+
+
+### GetTopChannelList
+
+This http POST will be called to 获取上面部分的频道列表
+
+```json
+POST api/Topic/GetTopChannelList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ChannelID":##,
+ "NewsTypeID":##,
+ "IconTag":"",
+ "ChannelTitle":"",
+ "LatestTopicText":""
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ChannelItemModel >  | 
+`[ ].ChannelID` | Int32 | 
+`[ ].NewsTypeID` | Int32 | 
+`[ ].IconTag` | String | 
+`[ ].ChannelTitle` | String | 
+`[ ].LatestTopicText` | String | 
+
+
+### GetHotChannelList
+
+This http POST will be called to 获取热门的频道列表
+
+```json
+POST api/Topic/GetHotChannelList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ChannelID":##,
+ "NewsTypeID":##,
+ "IconTag":"",
+ "ChannelTitle":"",
+ "LatestTopicText":""
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ChannelItemModel >  | 
+`[ ].ChannelID` | Int32 | 
+`[ ].NewsTypeID` | Int32 | 
+`[ ].IconTag` | String | 
+`[ ].ChannelTitle` | String | 
+`[ ].LatestTopicText` | String | 
+
+
+### GetTopicList
+
+This http POST will be called to 获取频道话题列表
+
+```json
+POST api/Topic/GetTopicList
+```
+
+```json
+{
+"ChannelID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetTopicListModel | 
+`ChannelID` | Int32 | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "ID":##,
+ "ParentTopicID":##,
+ "ChannelID":##,
+ "ChannelTitle":"",
+ "GoodVal":##,
+ "UserID":##,
+ "FeedbackNum":##,
+ "CanGood":true,
+ "PublishOn":"yyyy-MM-dd HH:mm:ss",
+ "TopicDetailItems":[
+   {
+   "Type":"",
+   "Content":"",
+   "SortNum":##
+   }
+  ]
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < TopicDetailModel >  | 
+`[ ].ID` | Int32 | 
+`[ ].ParentTopicID` | Nullable < Int32 >  | 
+`[ ].ChannelID` | Int32 | 
+`[ ].ChannelTitle` | String | 
+`[ ].GoodVal` | Int32 | 
+`[ ].UserID` | Int32 | 
+`[ ].FeedbackNum` | Int32 | 
+`[ ].CanGood` | Boolean | 
+`[ ].PublishOn` | DateTime | 
+`[ ].TopicDetailItems` | IList < ContentItemModel >  | 
+`[ ].TopicDetailItems[ ].Type` | String | 
+`[ ].TopicDetailItems[ ].Content` | String | 
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+
+
+### SubmitTopic
+
+This http POST will be called to 提交话题
+
+```json
+POST api/Topic/SubmitTopic
+```
+
+```json
+{
+"ChannelID":##,
+"ParentTopicID":##,
+"Items":[
+  {
+  "Type":"",
+  "Content":"",
+  "ImageExt":""
+  }
+ ]
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | TopicSubmitModel | 
+`ChannelID` | Int32 | 
+`ParentTopicID` | Nullable < Int32 >  | 
+`Items` | IList < SubmitContentItemModel >  | 
+`Items[ ].Type` | String | 
+`Items[ ].Content` | String | 
+`Items[ ].ImageExt` | String | 
+
+
+**Returns**
+
+```json
+{
+"ID":##,
+"ParentTopicID":##,
+"ChannelID":##,
+"ChannelTitle":"",
+"GoodVal":##,
+"UserID":##,
+"FeedbackNum":##,
+"CanGood":true,
+"PublishOn":"yyyy-MM-dd HH:mm:ss",
+"TopicDetailItems":[
+  {
+  "Type":"",
+  "Content":"",
+  "SortNum":##
+  }
+ ]
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | TopicDetailModel | 
+`ID` | Int32 | 
+`ParentTopicID` | Nullable < Int32 >  | 
+`ChannelID` | Int32 | 
+`ChannelTitle` | String | 
+`GoodVal` | Int32 | 
+`UserID` | Int32 | 
+`FeedbackNum` | Int32 | 
+`CanGood` | Boolean | 
+`PublishOn` | DateTime | 
+`TopicDetailItems` | IList < ContentItemModel >  | 
+`TopicDetailItems[ ].Type` | String | 
+`TopicDetailItems[ ].Content` | String | 
+`TopicDetailItems[ ].SortNum` | Int32 | 
+
+
+## Activity
+
+### GetCarouselList
+
+This http POST will be called to 获取轮播数据
+
+```json
+POST api/Activity/GetCarouselList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "ImageFileName":"",
+ "TagName":"",
+ "CarouselTitle":"",
+ "Url":"",
+ "SortNum":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityCarouselItemModel >  | 
+`[ ].ActivityID` | Int32 | 
+`[ ].ImageFileName` | String | 
+`[ ].TagName` | String | 
+`[ ].CarouselTitle` | String | 
+`[ ].Url` | String | 
+`[ ].SortNum` | Int32 | 
+
+
+### GetTypeList
+
+This http POST will be called to 获取活动类别列表数据
+
+```json
+POST api/Activity/GetTypeList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityTypeID":##,
+ "TypeName":"",
+ "IconTag":"",
+ "SortNum":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityTypeItemModel >  | 
+`[ ].ActivityTypeID` | Int32 | 
+`[ ].TypeName` | String | 
+`[ ].IconTag` | String | 
+`[ ].SortNum` | Int32 | 
+
+
+### GetFrontList
+
+This http POST will be called to 获取首页活动列表数据
+
+```json
+POST api/Activity/GetFrontList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 
+`[ ].URL` | String | 
+`[ ].Title` | String | 
+`[ ].TitleImageFileName` | String | 
+`[ ].StarVal` | Int32 | 
+`[ ].Summary` | String | 
+`[ ].SortNum` | Int32 | 
+`[ ].ParticipantNum` | Int32 | 
+`[ ].ButtonText` | String | 
+`[ ].CanClick` | Boolean | 
+`[ ].StartDate` | DateTime | 
+`[ ].EndDate` | DateTime | 
+
+
+### Collect
+
+This http POST will be called to 收藏某个活动
+
+```json
+POST api/Activity/Collect
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+### UnCollect
+
+This http POST will be called to 删除某个活动的收藏
+
+```json
+POST api/Activity/UnCollect
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+### Participant
+
+This http POST will be called to 参与某个活动
+
+```json
+POST api/Activity/Participant
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
 
 
 ## User
@@ -618,6 +1110,92 @@ variable | datatype | description
 `Password` | String | 
 `AreaID` | Nullable < Int32 >  | 
 `Gender` | Nullable < Int32 >  | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+## Message
+
+### GetNewMessageCount
+
+This http POST will be called to 获取新通知的数量
+
+```json
+POST api/Message/GetNewMessageCount
+```
+
+**Returns**
+
+```json
+##
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Int32 | 
+
+
+### GetMessageList
+
+This http POST will be called to 获取所有通知列表
+
+```json
+POST api/Message/GetMessageList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "MessageID":##,
+ "MessageTitle":"",
+ "MessageContent":"",
+ "SendOn":"yyyy-MM-dd HH:mm:ss",
+ "IsGlobal":true,
+ "IsRead":true
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < MessageItemModel >  | 
+`[ ].MessageID` | Int32 | 
+`[ ].MessageTitle` | String | 
+`[ ].MessageContent` | String | 
+`[ ].SendOn` | DateTime | 
+`[ ].IsGlobal` | Boolean | 
+`[ ].IsRead` | Boolean | 
+
+
+### Delete
+
+This http POST will be called to 删除指定的通知
+
+```json
+POST api/Message/Delete
+```
+
+```json
+{
+"MessageID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | MessageIDModel | 
+`MessageID` | Int32 | 
 
 
 **Returns**
@@ -758,12 +1336,20 @@ variable | datatype | description
 This http POST will be called to 获取咨询详细
 
 ```json
-POST api/News/GetNewsDetail/{id}
+POST api/News/GetNewsDetail
+```
+
+```json
+{
+"NewsID":##
+}
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`id` | Int32 | 咨询ID
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 
+
 
 **Returns**
 
@@ -801,12 +1387,128 @@ variable | datatype | description
 This http POST will be called to 设置当前状态，正在哪个咨询类目
 
 ```json
-POST api/News/SetCurrentStatus/{id}
+POST api/News/SetCurrentStatus
+```
+
+```json
+{
+"NewsTypeID":##
+}
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`id` | Int32 | 咨询类目ID
+`this` | NewsTypeIDModel | 
+`NewsTypeID` | Int32 | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+### GetCollectedActivityList
+
+This http POST will be called to 获取有用的咨询列表数据
+
+```json
+POST api/News/GetCollectedActivityList
+```
+
+```json
+{
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | PagedModel | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "NewsID":##,
+ "Title":"",
+ "Summary":"",
+ "UsefulVal":##,
+ "HasCollect":true
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsMainModel >  | 
+`[ ].NewsID` | Int32 | 
+`[ ].Title` | String | 
+`[ ].Summary` | String | 
+`[ ].UsefulVal` | Int32 | 
+`[ ].HasCollect` | Boolean | 
+
+
+### Collect
+
+This http POST will be called to 收藏某个咨询
+
+```json
+POST api/News/Collect
+```
+
+```json
+{
+"NewsID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 
+
+
+### UnCollect
+
+This http POST will be called to 删除某个咨询的收藏
+
+```json
+POST api/News/UnCollect
+```
+
+```json
+{
+"NewsID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 
+
 
 **Returns**
 
