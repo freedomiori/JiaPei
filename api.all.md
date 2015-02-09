@@ -39,7 +39,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Guid | 返回token，客户端得到后放在header内,每次自动上传验证。
 
-
+---
 ### GetInfo
 
 This http POST will be called to 获取个人信息(自动登录)
@@ -71,7 +71,7 @@ variable | datatype | description
 `Gender` | Int32 | 性别，0 是男 1 是女 不填为null
 `PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
-
+---
 ### Login
 
 This http POST will be called to 登录并返回个人信息
@@ -117,7 +117,7 @@ variable | datatype | description
 `Gender` | Int32 | 性别，0 是男 1 是女 不填为null
 `PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
-
+---
 ### Logout
 
 This http POST will be called to 注销当前用户
@@ -136,7 +136,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
-
+---
 ### SendVCodeForRegister
 
 This http POST will be called to 发送注册验证码
@@ -167,7 +167,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
-
+---
 ### ValidateRegVCode
 
 This http POST will be called to 验证手机注册验证码
@@ -200,7 +200,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
-
+---
 ### Register
 
 This http POST will be called to 注册用户第二步并登录
@@ -246,7 +246,7 @@ variable | datatype | description
 `Gender` | Int32 | 性别，0 是男 1 是女 不填为null
 `PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
-
+---
 ### SendVCodeForForgetPass
 
 This http POST will be called to 发送忘记密码验证码
@@ -277,7 +277,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否发送成功
 
-
+---
 ### ResetPassword
 
 This http POST will be called to 重置密码
@@ -312,7 +312,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
-
+===
 ## Topic
 
 ### SendGood
@@ -345,7 +345,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Int32 | 返回当前点赞的总数
 
-
+---
 ### SendNotGood
 
 This http POST will be called to 取消点赞
@@ -376,7 +376,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Int32 | 返回当前点赞的总数
 
-
+---
 ### Delete
 
 This http POST will be called to 删除咨询
@@ -407,7 +407,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
-
+---
 ### GetMyTopicList
 
 This http POST will be called to 获取我说的列表
@@ -472,7 +472,7 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
-
+---
 ### GetFeedbackList
 
 This http POST will be called to 获取评论列表
@@ -539,7 +539,7 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
-
+---
 ### GetMyTopicMessages
 
 This http POST will be called to 获取我的评论消息
@@ -600,7 +600,7 @@ variable | datatype | description
 `[ ].IsGood` | Boolean | 
 `[ ].CreateOn` | DateTime | 
 
-
+---
 ### GetTopMessages
 
 This http POST will be called to 获取最新评论消息条数及评论人头像列表
@@ -638,7 +638,7 @@ variable | datatype | description
 `Count` | Int32 | 
 `UserPhotos` | IList < String >  | 
 
-
+---
 ### GetTopChannelList
 
 This http POST will be called to 获取上面部分的频道列表
@@ -670,7 +670,7 @@ variable | datatype | description
 `[ ].ChannelTitle` | String | 
 `[ ].LatestTopicText` | String | 
 
-
+---
 ### GetHotChannelList
 
 This http POST will be called to 获取热门的频道列表
@@ -702,7 +702,7 @@ variable | datatype | description
 `[ ].ChannelTitle` | String | 
 `[ ].LatestTopicText` | String | 
 
-
+---
 ### GetTopicList
 
 This http POST will be called to 获取频道话题列表
@@ -769,7 +769,7 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
-
+---
 ### SubmitTopic
 
 This http POST will be called to 提交话题
@@ -843,7 +843,7 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
-
+===
 ## Activity
 
 ### GetCarouselList
@@ -879,7 +879,7 @@ variable | datatype | description
 `[ ].Url` | String | 
 `[ ].SortNum` | Int32 | 
 
-
+---
 ### GetTypeList
 
 This http POST will be called to 获取活动类别列表数据
@@ -909,7 +909,7 @@ variable | datatype | description
 `[ ].IconTag` | String | 
 `[ ].SortNum` | Int32 | 
 
-
+---
 ### GetFrontList
 
 This http POST will be called to 获取首页活动列表数据
@@ -955,7 +955,7 @@ variable | datatype | description
 `[ ].StartDate` | DateTime | 
 `[ ].EndDate` | DateTime | 
 
-
+---
 ### GetActivityList
 
 This http POST will be called to 获取某个活动类别下的活动列表数据
@@ -1017,7 +1017,7 @@ variable | datatype | description
 `[ ].StartDate` | DateTime | 
 `[ ].EndDate` | DateTime | 
 
-
+---
 ### GetCollectedActivityList
 
 This http POST will be called to 获取有趣的活动列表数据
@@ -1077,7 +1077,7 @@ variable | datatype | description
 `[ ].StartDate` | DateTime | 
 `[ ].EndDate` | DateTime | 
 
-
+---
 ### Collect
 
 This http POST will be called to 收藏某个活动
@@ -1108,7 +1108,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+---
 ### UnCollect
 
 This http POST will be called to 删除某个活动的收藏
@@ -1139,7 +1139,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+---
 ### Participant
 
 This http POST will be called to 参与某个活动
@@ -1170,7 +1170,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+===
 ## User
 
 ### UploadPhoto
@@ -1205,7 +1205,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | String | 
 
-
+---
 ### UpdateUserInfo
 
 This http POST will be called to 修改用户信息
@@ -1244,7 +1244,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+===
 ## Message
 
 ### GetNewMessageCount
@@ -1265,7 +1265,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Int32 | 
 
-
+---
 ### GetMessageList
 
 This http POST will be called to 获取所有通知列表
@@ -1299,7 +1299,7 @@ variable | datatype | description
 `[ ].IsGlobal` | Boolean | 
 `[ ].IsRead` | Boolean | 
 
-
+---
 ### Delete
 
 This http POST will be called to 删除指定的通知
@@ -1330,7 +1330,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+===
 ## News
 
 ### GetAllNewsTypes
@@ -1364,7 +1364,7 @@ variable | datatype | description
 `[ ].SortNum` | Int32 | 
 `[ ].Status` | Int32 | 
 
-
+---
 ### GetNewsList
 
 This http POST will be called to 获取咨询列表，带分页
@@ -1412,7 +1412,7 @@ variable | datatype | description
 `[ ].UsefulVal` | Int32 | 
 `[ ].HasCollect` | Boolean | 
 
-
+---
 ### GetNewsListTop
 
 This http POST will be called to 获取咨询列表表头
@@ -1452,7 +1452,7 @@ variable | datatype | description
 `TopicID` | Int32 | 
 `UserPhotos` | IList < String >  | 
 
-
+---
 ### GetNewsDetail
 
 This http POST will be called to 获取咨询详细
@@ -1503,7 +1503,7 @@ variable | datatype | description
 `NextNewsID` | Nullable < Int32 >  | 
 `NextNewsTitle` | String | 
 
-
+---
 ### SetCurrentStatus
 
 This http POST will be called to 设置当前状态，正在哪个咨询类目
@@ -1534,7 +1534,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+---
 ### GetCollectedNewsList
 
 This http POST will be called to 获取有用的咨询列表数据
@@ -1580,7 +1580,7 @@ variable | datatype | description
 `[ ].UsefulVal` | Int32 | 
 `[ ].HasCollect` | Boolean | 
 
-
+---
 ### Collect
 
 This http POST will be called to 收藏某个咨询
@@ -1611,7 +1611,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+---
 ### UnCollect
 
 This http POST will be called to 删除某个咨询的收藏
@@ -1642,7 +1642,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 
 
-
+===
 ## Common
 
 ### GetAllArea
