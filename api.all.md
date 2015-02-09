@@ -22,22 +22,22 @@ POST api/Account/GetToken
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PhoneInfoModel | 
-`MID` | String | 
-`V` | String | 
-`Mtype` | String | 
-`W` | Int32 | 
-`H` | Int32 | 
+`MID` | String | 手机唯一码，能用SSID最好，尽量不要变化。IOS和android不要重复。
+`V` | String | 版本号，供个人中心的当前版本使用，如：1.1
+`Mtype` | String | 手机型号，如：Iphone5s 1530
+`W` | Int32 | 手机分辨率的宽度，如：800
+`H` | Int32 | 手机分辨率的高度，如：600
 
 
 **Returns**
 
 ```json
-"00000000-0000-0000-0000-000000000000"
+"EFFE6A32-4A1F-4052-B2AE-A0F78C02CEDC"
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Guid | 
+`this` | Guid | 返回token，客户端得到后放在header内,每次自动上传验证。
 
 
 ### GetInfo
@@ -64,12 +64,12 @@ POST api/Account/GetInfo
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
-`UserID` | Int32 | 
-`UserName` | String | 
-`Phone` | String | 
-`AreaID` | Nullable < Int32 >  | 
-`Gender` | Int32 | 
-`PhotoFileName` | String | 
+`UserID` | Int32 | 用户ID，如：4
+`UserName` | String | 用户昵称：如：Jessie
+`Phone` | String | 用户手机号：13634131000
+`AreaID` | Nullable < Int32 >  | 地区ID，如：1
+`Gender` | Int32 | 性别，0 是男 1 是女 不填为null
+`PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
 
 ### Login
