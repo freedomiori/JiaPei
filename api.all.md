@@ -134,7 +134,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 
 ### SendVCodeForRegister
@@ -165,7 +165,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 
 ### ValidateRegVCode
@@ -198,7 +198,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 
 ### Register
@@ -239,12 +239,12 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
-`UserID` | Int32 | 
-`UserName` | String | 
-`Phone` | String | 
-`AreaID` | Nullable < Int32 >  | 
-`Gender` | Int32 | 
-`PhotoFileName` | String | 
+`UserID` | Int32 | 用户ID
+`UserName` | String | 用户昵称：如：Jessie
+`Phone` | String | 手机号
+`AreaID` | Nullable < Int32 >  | 地区ID，如：1
+`Gender` | Int32 | 性别，0 是男 1 是女 不填为null
+`PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
 
 ### SendVCodeForForgetPass
@@ -264,7 +264,7 @@ POST api/Account/SendVCodeForForgetPass
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PhoneModel | 
-`Phone` | String | 
+`Phone` | String | 手机号
 
 
 **Returns**
@@ -275,7 +275,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否发送成功
 
 
 ### ResetPassword
@@ -297,9 +297,9 @@ POST api/Account/ResetPassword
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ResetPasswordModel | 
-`Phone` | String | 
-`Password` | String | 
-`VCode` | String | 
+`Phone` | String | 手机号
+`Password` | String | 新密码
+`VCode` | String | 短信验证码
 
 
 **Returns**
@@ -310,7 +310,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 
 ## Topic
@@ -332,7 +332,7 @@ POST api/Topic/SendGood
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicIDModel | 
-`TopicID` | Int32 | 
+`TopicID` | Int32 | 话题ID， 如：2
 
 
 **Returns**
@@ -343,7 +343,7 @@ variable | datatype | description
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Int32 | 
+`this` | Int32 | 返回当前点赞的总数
 
 
 ### SendNotGood
@@ -363,7 +363,7 @@ POST api/Topic/SendNotGood
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicIDModel | 
-`TopicID` | Int32 | 
+`TopicID` | Int32 | 话题ID， 如：2
 
 
 **Returns**
@@ -374,12 +374,12 @@ variable | datatype | description
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Int32 | 
+`this` | Int32 | 返回当前点赞的总数
 
 
 ### Delete
 
-This http POST will be called to 删除话题
+This http POST will be called to 删除咨询
 
 ```json
 POST api/Topic/Delete
@@ -394,7 +394,7 @@ POST api/Topic/Delete
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicIDModel | 
-`TopicID` | Int32 | 
+`TopicID` | Int32 | 话题ID， 如：2
 
 
 **Returns**
@@ -405,7 +405,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 
 ### GetMyTopicList
@@ -426,8 +426,8 @@ POST api/Topic/GetMyTopicList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PagedModel | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -458,19 +458,19 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 
-`[ ].ParentTopicID` | Nullable < Int32 >  | 
-`[ ].ChannelID` | Int32 | 
-`[ ].ChannelTitle` | String | 
-`[ ].GoodVal` | Int32 | 
-`[ ].UserID` | Int32 | 
-`[ ].FeedbackNum` | Int32 | 
-`[ ].CanGood` | Boolean | 
-`[ ].PublishOn` | DateTime | 
+`[ ].ID` | Int32 | 话题ID
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].GoodVal` | Int32 | 被点赞的总数
+`[ ].UserID` | Int32 | 用户ID
+`[ ].FeedbackNum` | Int32 | 被回复的总数
+`[ ].CanGood` | Boolean | 是否可被点赞
+`[ ].PublishOn` | DateTime | 发布时间
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
-`[ ].TopicDetailItems[ ].Type` | String | 
-`[ ].TopicDetailItems[ ].Content` | String | 
-`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 
 ### GetFeedbackList
@@ -492,9 +492,9 @@ POST api/Topic/GetFeedbackList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetFeedbackListModel | 
-`TopicID` | Int32 | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`TopicID` | Int32 | 话题ID， 如：2
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -535,9 +535,9 @@ variable | datatype | description
 `[ ].CanGood` | Boolean | 
 `[ ].PublishOn` | DateTime | 
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
-`[ ].TopicDetailItems[ ].Type` | String | 
-`[ ].TopicDetailItems[ ].Content` | String | 
-`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 
 ### GetMyTopicMessages
@@ -723,8 +723,8 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetTopicListModel | 
 `ChannelID` | Int32 | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -765,9 +765,9 @@ variable | datatype | description
 `[ ].CanGood` | Boolean | 
 `[ ].PublishOn` | DateTime | 
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
-`[ ].TopicDetailItems[ ].Type` | String | 
-`[ ].TopicDetailItems[ ].Content` | String | 
-`[ ].TopicDetailItems[ ].SortNum` | Int32 | 
+`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 
 ### SubmitTopic
@@ -798,9 +798,9 @@ variable | datatype | description
 `ChannelID` | Int32 | 
 `ParentTopicID` | Nullable < Int32 >  | 
 `Items` | IList < SubmitContentItemModel >  | 
-`Items[ ].Type` | String | 
-`Items[ ].Content` | String | 
-`Items[ ].ImageExt` | String | 
+`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片Base64编码
+`Items[ ].ImageExt` | String | 图片后缀名，例如："jpg", ".jpg", "Jpg", "JPg"...
 
 
 **Returns**
@@ -839,9 +839,9 @@ variable | datatype | description
 `CanGood` | Boolean | 
 `PublishOn` | DateTime | 
 `TopicDetailItems` | IList < ContentItemModel >  | 
-`TopicDetailItems[ ].Type` | String | 
-`TopicDetailItems[ ].Content` | String | 
-`TopicDetailItems[ ].SortNum` | Int32 | 
+`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 
 ## Activity
@@ -976,8 +976,8 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetActivityListModel | 
 `ActivityTypeID` | Int32 | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -1036,8 +1036,8 @@ POST api/Activity/GetCollectedActivityList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PagedModel | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -1385,8 +1385,8 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetNewsListModel | 
 `NewsTypeID` | Int32 | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
@@ -1497,9 +1497,9 @@ variable | datatype | description
 `Title` | String | 
 `NewsTypeName` | String | 
 `NewsDetailItems` | IList < ContentItemModel >  | 
-`NewsDetailItems[ ].Type` | String | 
-`NewsDetailItems[ ].Content` | String | 
-`NewsDetailItems[ ].SortNum` | Int32 | 
+`NewsDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`NewsDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`NewsDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `NextNewsID` | Nullable < Int32 >  | 
 `NextNewsTitle` | String | 
 
@@ -1553,8 +1553,8 @@ POST api/News/GetCollectedNewsList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PagedModel | 
-`Skip` | Int32 | 
-`Take` | Int32 | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
 
 
 **Returns**
