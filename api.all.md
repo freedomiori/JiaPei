@@ -904,9 +904,9 @@ POST api/Activity/GetTypeList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ActivityTypeItemModel >  | 
-`[ ].ActivityTypeID` | Int32 | 
-`[ ].TypeName` | String | 
-`[ ].IconTag` | String | 
+`[ ].ActivityTypeID` | Int32 | 活动类别ID
+`[ ].TypeName` | String | 活动类别名
+`[ ].IconTag` | String | 活动类别图标标识
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 ---
@@ -942,18 +942,18 @@ POST api/Activity/GetFrontList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 
-`[ ].URL` | String | 
-`[ ].Title` | String | 
-`[ ].TitleImageFileName` | String | 
-`[ ].StarVal` | Int32 | 
-`[ ].Summary` | String | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 
-`[ ].ButtonText` | String | 
-`[ ].CanClick` | Boolean | 
-`[ ].StartDate` | DateTime | 
-`[ ].EndDate` | DateTime | 
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
 
 ---
 ### GetActivityList
@@ -975,7 +975,7 @@ POST api/Activity/GetActivityList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetActivityListModel | 
-`ActivityTypeID` | Int32 | 
+`ActivityTypeID` | Int32 | 活动类别ID
 `Skip` | Int32 | 跳过条数，即从第几条开始
 `Take` | Int32 | 获取条数
 
@@ -1004,18 +1004,18 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 
-`[ ].URL` | String | 
-`[ ].Title` | String | 
-`[ ].TitleImageFileName` | String | 
-`[ ].StarVal` | Int32 | 
-`[ ].Summary` | String | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 
-`[ ].ButtonText` | String | 
-`[ ].CanClick` | Boolean | 
-`[ ].StartDate` | DateTime | 
-`[ ].EndDate` | DateTime | 
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
 
 ---
 ### GetCollectedActivityList
@@ -1064,18 +1064,18 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 
-`[ ].URL` | String | 
-`[ ].Title` | String | 
-`[ ].TitleImageFileName` | String | 
-`[ ].StarVal` | Int32 | 
-`[ ].Summary` | String | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 
-`[ ].ButtonText` | String | 
-`[ ].CanClick` | Boolean | 
-`[ ].StartDate` | DateTime | 
-`[ ].EndDate` | DateTime | 
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
 
 ---
 ### Collect
@@ -1095,7 +1095,7 @@ POST api/Activity/Collect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ActivityIDModel | 
-`ActivityID` | Int32 | 
+`ActivityID` | Int32 | 活动ID
 
 
 **Returns**
@@ -1106,7 +1106,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ---
 ### UnCollect
@@ -1126,7 +1126,7 @@ POST api/Activity/UnCollect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ActivityIDModel | 
-`ActivityID` | Int32 | 
+`ActivityID` | Int32 | 活动ID
 
 
 **Returns**
@@ -1137,7 +1137,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ---
 ### Participant
@@ -1157,7 +1157,7 @@ POST api/Activity/Participant
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ActivityIDModel | 
-`ActivityID` | Int32 | 
+`ActivityID` | Int32 | 活动ID
 
 
 **Returns**
@@ -1168,7 +1168,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ===
 ## User
@@ -1191,8 +1191,8 @@ POST api/User/UploadPhoto
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ImageModel | 
-`ImageExt` | String | 
-`Image` | String | 
+`ImageExt` | String | 图片后缀名，例如："jpg", ".jpg", "Jpg", "JPg"...
+`Image` | String | 图片Base64编码
 
 
 **Returns**
@@ -1203,7 +1203,7 @@ variable | datatype | description
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | String | 
+`this` | String | 返回图片文件名
 
 ---
 ### UpdateUserInfo
@@ -1227,11 +1227,11 @@ POST api/User/UpdateUserInfo
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UpdateUserModel | 
-`UserName` | String | 
-`OldPassword` | String | 
-`Password` | String | 
-`AreaID` | Nullable < Int32 >  | 
-`Gender` | Nullable < Int32 >  | 
+`UserName` | String | 用户昵称
+`OldPassword` | String | 原来的密码
+`Password` | String | 新密码
+`AreaID` | Nullable < Int32 >  | 地区ID
+`Gender` | Nullable < Int32 >  | 性别，男：0，女：1
 
 
 **Returns**
@@ -1242,7 +1242,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ===
 ## Message
@@ -1263,7 +1263,7 @@ POST api/Message/GetNewMessageCount
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Int32 | 
+`this` | Int32 | 返回新通知的数量
 
 ---
 ### GetMessageList
@@ -1292,12 +1292,12 @@ POST api/Message/GetMessageList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < MessageItemModel >  | 
-`[ ].MessageID` | Int32 | 
-`[ ].MessageTitle` | String | 
-`[ ].MessageContent` | String | 
-`[ ].SendOn` | DateTime | 
-`[ ].IsGlobal` | Boolean | 
-`[ ].IsRead` | Boolean | 
+`[ ].MessageID` | Int32 | 消息ID
+`[ ].MessageTitle` | String | 消息标题
+`[ ].MessageContent` | String | 消息正文
+`[ ].SendOn` | DateTime | 消息发送时间
+`[ ].IsGlobal` | Boolean | 是否为全局消息
+`[ ].IsRead` | Boolean | 是否已读
 
 ---
 ### Delete
@@ -1317,7 +1317,7 @@ POST api/Message/Delete
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | MessageIDModel | 
-`MessageID` | Int32 | 
+`MessageID` | Int32 | 消息的ID
 
 
 **Returns**
@@ -1328,7 +1328,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ===
 ## News
@@ -1358,11 +1358,11 @@ POST api/News/GetAllNewsTypes
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsTypeModel >  | 
-`[ ].NewsTypeID` | Int32 | 
-`[ ].TypeName` | String | 
-`[ ].ChannelID` | Int32 | 
+`[ ].NewsTypeID` | Int32 | 咨询类别的ID
+`[ ].TypeName` | String | 咨询类别的名称
+`[ ].ChannelID` | Int32 | 频道ID
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].Status` | Int32 | 
+`[ ].Status` | Int32 | 状态值，0：未开始，1：正在进行，2：已经完成
 
 ---
 ### GetNewsList
@@ -1384,7 +1384,7 @@ POST api/News/GetNewsList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetNewsListModel | 
-`NewsTypeID` | Int32 | 
+`NewsTypeID` | Int32 | 咨询类别ID
 `Skip` | Int32 | 跳过条数，即从第几条开始
 `Take` | Int32 | 获取条数
 
@@ -1406,11 +1406,11 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 
-`[ ].Title` | String | 
-`[ ].Summary` | String | 
-`[ ].UsefulVal` | Int32 | 
-`[ ].HasCollect` | Boolean | 
+`[ ].NewsID` | Int32 | 咨询ID
+`[ ].Title` | String | 咨询标题
+`[ ].Summary` | String | 咨询简介
+`[ ].UsefulVal` | Int32 | 有用值
+`[ ].HasCollect` | Boolean | 是否已经收藏
 
 ---
 ### GetNewsListTop
@@ -1431,8 +1431,8 @@ POST api/News/GetNewsListTop
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetNewsListTopModel | 
-`NewsTypeID` | Int32 | 
-`Count` | Int32 | 
+`NewsTypeID` | Int32 | 咨询类别ID
+`Count` | Int32 | 希望获取的最新发表话题的用户头像数
 
 
 **Returns**
@@ -1449,8 +1449,8 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsListTopModel | 
-`TopicID` | Int32 | 
-`UserPhotos` | IList < String >  | 
+`TopicID` | Int32 | 话题ID
+`UserPhotos` | IList < String >  | 发表话题的用户的头像文件名列表
 
 ---
 ### GetNewsDetail
@@ -1470,7 +1470,7 @@ POST api/News/GetNewsDetail
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 
+`NewsID` | Int32 | 咨询ID
 
 
 **Returns**
@@ -1494,14 +1494,14 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsDetailModel | 
-`Title` | String | 
-`NewsTypeName` | String | 
+`Title` | String | 咨询标题
+`NewsTypeName` | String | 咨询类别名
 `NewsDetailItems` | IList < ContentItemModel >  | 
 `NewsDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `NewsDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `NewsDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`NextNewsID` | Nullable < Int32 >  | 
-`NextNewsTitle` | String | 
+`NextNewsID` | Nullable < Int32 >  | 下一条咨询ID
+`NextNewsTitle` | String | 下一条咨询标题
 
 ---
 ### SetCurrentStatus
@@ -1521,7 +1521,7 @@ POST api/News/SetCurrentStatus
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsTypeIDModel | 
-`NewsTypeID` | Int32 | 
+`NewsTypeID` | Int32 | 咨询类别ID
 
 
 **Returns**
@@ -1532,7 +1532,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ---
 ### GetCollectedNewsList
@@ -1574,11 +1574,11 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 
-`[ ].Title` | String | 
-`[ ].Summary` | String | 
-`[ ].UsefulVal` | Int32 | 
-`[ ].HasCollect` | Boolean | 
+`[ ].NewsID` | Int32 | 咨询ID
+`[ ].Title` | String | 咨询标题
+`[ ].Summary` | String | 咨询简介
+`[ ].UsefulVal` | Int32 | 有用值
+`[ ].HasCollect` | Boolean | 是否已收藏
 
 ---
 ### Collect
@@ -1598,7 +1598,7 @@ POST api/News/Collect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 
+`NewsID` | Int32 | 咨询ID
 
 
 **Returns**
@@ -1609,7 +1609,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ---
 ### UnCollect
@@ -1629,7 +1629,7 @@ POST api/News/UnCollect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 
+`NewsID` | Int32 | 咨询ID
 
 
 **Returns**
@@ -1640,7 +1640,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 
+`this` | Boolean | 返回是否成功
 
 ===
 ## Common
@@ -1670,8 +1670,8 @@ POST api/Common/GetAllArea
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < AreaModel >  | 
-`[ ].AreaID` | Int32 | 
-`[ ].AreaCode` | String | 
-`[ ].AreaName` | String | 
-`[ ].LevelNum` | Int32 | 
+`[ ].AreaID` | Int32 | 地区ID
+`[ ].AreaCode` | String | 地区编码，2位一个级别，如浙江为01，杭州为0101
+`[ ].AreaName` | String | 地区名
+`[ ].LevelNum` | Int32 | 地区级别，如浙江为1，杭州为2
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
