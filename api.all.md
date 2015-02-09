@@ -90,8 +90,8 @@ POST api/Account/Login
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | LoginModel | 
-`Phone` | String | 
-`Password` | String | 
+`Phone` | String | 手机号，也是用户名
+`Password` | String | 密码
 
 
 **Returns**
@@ -110,12 +110,12 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | UserInfo | 
-`UserID` | Int32 | 
-`UserName` | String | 
-`Phone` | String | 
-`AreaID` | Nullable < Int32 >  | 
-`Gender` | Int32 | 
-`PhotoFileName` | String | 
+`UserID` | Int32 | 用户ID
+`UserName` | String | 用户昵称：如：Jessie
+`Phone` | String | 手机号
+`AreaID` | Nullable < Int32 >  | 地区ID，如：1
+`Gender` | Int32 | 性别，0 是男 1 是女 不填为null
+`PhotoFileName` | String | 头像图片名称，如：b26951fc2a054c84bb6e338f9b245cf7.jpg
 
 
 ### Logout
@@ -154,7 +154,7 @@ POST api/Account/SendVCodeForRegister
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | PhoneModel | 
-`Phone` | String | 
+`Phone` | String | 手机号
 
 
 **Returns**
@@ -186,8 +186,8 @@ POST api/Account/ValidateRegVCode
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | ValidateRegModel | 
-`Phone` | String | 
-`VCode` | String | 
+`Phone` | String | 手机号
+`VCode` | String | 手机收到的验证码
 
 
 **Returns**
@@ -203,7 +203,7 @@ variable | datatype | description
 
 ### Register
 
-This http POST will be called to 注册用户并登录
+This http POST will be called to 注册用户第二步并登录
 
 ```json
 POST api/Account/Register
@@ -219,8 +219,8 @@ POST api/Account/Register
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | RegisterModel | 
-`UserName` | String | 
-`Password` | String | 
+`UserName` | String | 用户昵称：如：Jessie
+`Password` | String | 用户密码
 
 
 **Returns**
