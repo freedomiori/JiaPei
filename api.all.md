@@ -525,15 +525,15 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 
-`[ ].ParentTopicID` | Nullable < Int32 >  | 
-`[ ].ChannelID` | Int32 | 
-`[ ].ChannelTitle` | String | 
-`[ ].GoodVal` | Int32 | 
-`[ ].UserID` | Int32 | 
-`[ ].FeedbackNum` | Int32 | 
-`[ ].CanGood` | Boolean | 
-`[ ].PublishOn` | DateTime | 
+`[ ].ID` | Int32 | 话题ID,如：2
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].GoodVal` | Int32 | 被赞的总数
+`[ ].UserID` | Int32 | 发布话题的用户ID
+`[ ].FeedbackNum` | Int32 | 回复的总数
+`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].PublishOn` | DateTime | 发布时间
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
@@ -557,7 +557,7 @@ POST api/Topic/GetMyTopicMessages
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | CountModel | 
-`Count` | Int32 | 
+`Count` | Int32 | 获取的记录数
 
 
 **Returns**
@@ -586,19 +586,19 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicMessageModel >  | 
-`[ ].HostTopicID` | Int32 | 
-`[ ].HostPublisherID` | Int32 | 
-`[ ].HostTopicContent` | String | 
-`[ ].HostContentType` | String | 
-`[ ].TopicID` | Nullable < Int32 >  | 
+`[ ].HostTopicID` | Int32 | 被评论的话题ID
+`[ ].HostPublisherID` | Int32 | 被评论的话题的发布者ID
+`[ ].HostTopicContent` | String | 被评论的话题的内容， 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].HostContentType` | String | 被评论的话题内容的类型，目前为2种，"text":文本；"image"：图片
+`[ ].TopicID` | Nullable < Int32 >  | 回复的话题ID，当为点赞时，该话题ID为null
 `[ ].Publisher` | Publisher | 
-`[ ].Publisher.UserID` | Int32 | 
-`[ ].Publisher.UserName` | String | 
-`[ ].Publisher.PhotoFileName` | String | 
-`[ ].TopicContent` | String | 
-`[ ].ContentType` | String | 
-`[ ].IsGood` | Boolean | 
-`[ ].CreateOn` | DateTime | 
+`[ ].Publisher.UserID` | Int32 | 回复的话题的发布者的用户ID
+`[ ].Publisher.UserName` | String | 回复的话题的发布者的用户昵称
+`[ ].Publisher.PhotoFileName` | String | 回复的话题的发布者的头像文件名
+`[ ].TopicContent` | String | 评论的话题的内容， 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`[ ].ContentType` | String | 评论的话题内容的类型，目前为2种，"text":文本；"image"：图片
+`[ ].IsGood` | Boolean | 是否点赞，当该值为true时，话题ID(TopicID)为null
+`[ ].CreateOn` | DateTime | 创建时间，即发布时间
 
 ---
 ### GetTopMessages
@@ -618,7 +618,7 @@ POST api/Topic/GetTopMessages
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | CountModel | 
-`Count` | Int32 | 
+`Count` | Int32 | 最新评论人的头像最大个数，如：3
 
 
 **Returns**
@@ -635,8 +635,8 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicsListTopModel | 
-`Count` | Int32 | 
-`UserPhotos` | IList < String >  | 
+`Count` | Int32 | 最新评论消息条数
+`UserPhotos` | IList < String >  | 最新评论人的头像文件名
 
 ---
 ### GetTopChannelList
@@ -664,11 +664,11 @@ POST api/Topic/GetTopChannelList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ChannelItemModel >  | 
-`[ ].ChannelID` | Int32 | 
-`[ ].NewsTypeID` | Int32 | 
-`[ ].IconTag` | String | 
-`[ ].ChannelTitle` | String | 
-`[ ].LatestTopicText` | String | 
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].NewsTypeID` | Int32 | 咨询类别ID
+`[ ].IconTag` | String | 图标的标识
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].LatestTopicText` | String | 最新评论的文字，目前只获取类型为"text"的内容
 
 ---
 ### GetHotChannelList
@@ -696,11 +696,11 @@ POST api/Topic/GetHotChannelList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ChannelItemModel >  | 
-`[ ].ChannelID` | Int32 | 
-`[ ].NewsTypeID` | Int32 | 
-`[ ].IconTag` | String | 
-`[ ].ChannelTitle` | String | 
-`[ ].LatestTopicText` | String | 
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].NewsTypeID` | Int32 | 咨询类别ID
+`[ ].IconTag` | String | 图标的标识
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].LatestTopicText` | String | 最新评论的文字，目前只获取类型为"text"的内容
 
 ---
 ### GetTopicList
@@ -722,7 +722,7 @@ POST api/Topic/GetTopicList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetTopicListModel | 
-`ChannelID` | Int32 | 
+`ChannelID` | Int32 | 频道ID
 `Skip` | Int32 | 跳过条数，即从第几条开始
 `Take` | Int32 | 获取条数
 
@@ -755,15 +755,15 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 
-`[ ].ParentTopicID` | Nullable < Int32 >  | 
-`[ ].ChannelID` | Int32 | 
-`[ ].ChannelTitle` | String | 
-`[ ].GoodVal` | Int32 | 
-`[ ].UserID` | Int32 | 
-`[ ].FeedbackNum` | Int32 | 
-`[ ].CanGood` | Boolean | 
-`[ ].PublishOn` | DateTime | 
+`[ ].ID` | Int32 | 话题ID,如：2
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].GoodVal` | Int32 | 被赞的总数
+`[ ].UserID` | Int32 | 发布话题的用户ID
+`[ ].FeedbackNum` | Int32 | 回复的总数
+`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].PublishOn` | DateTime | 发布时间
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
@@ -795,8 +795,8 @@ POST api/Topic/SubmitTopic
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicSubmitModel | 
-`ChannelID` | Int32 | 
-`ParentTopicID` | Nullable < Int32 >  | 
+`ChannelID` | Int32 | 频道ID
+`ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
 `Items` | IList < SubmitContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片Base64编码
@@ -829,15 +829,15 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | TopicDetailModel | 
-`ID` | Int32 | 
-`ParentTopicID` | Nullable < Int32 >  | 
-`ChannelID` | Int32 | 
-`ChannelTitle` | String | 
-`GoodVal` | Int32 | 
-`UserID` | Int32 | 
-`FeedbackNum` | Int32 | 
-`CanGood` | Boolean | 
-`PublishOn` | DateTime | 
+`[ ].ID` | Int32 | 话题ID,如：2
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].GoodVal` | Int32 | 被赞的总数
+`[ ].UserID` | Int32 | 发布话题的用户ID
+`[ ].FeedbackNum` | Int32 | 回复的总数
+`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].PublishOn` | DateTime | 发布时间
 `TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
@@ -872,12 +872,12 @@ POST api/Activity/GetCarouselList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ActivityCarouselItemModel >  | 
-`[ ].ActivityID` | Int32 | 
-`[ ].ImageFileName` | String | 
-`[ ].TagName` | String | 
-`[ ].CarouselTitle` | String | 
-`[ ].Url` | String | 
-`[ ].SortNum` | Int32 | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].ImageFileName` | String | 活动图片文件名
+`[ ].TagName` | String | 活动标签
+`[ ].CarouselTitle` | String | 活动标题
+`[ ].Url` | String | 活动跳转Url
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 ---
 ### GetTypeList
@@ -907,7 +907,7 @@ variable | datatype | description
 `[ ].ActivityTypeID` | Int32 | 
 `[ ].TypeName` | String | 
 `[ ].IconTag` | String | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 ---
 ### GetFrontList
@@ -948,7 +948,7 @@ variable | datatype | description
 `[ ].TitleImageFileName` | String | 
 `[ ].StarVal` | Int32 | 
 `[ ].Summary` | String | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `[ ].ParticipantNum` | Int32 | 
 `[ ].ButtonText` | String | 
 `[ ].CanClick` | Boolean | 
@@ -1010,7 +1010,7 @@ variable | datatype | description
 `[ ].TitleImageFileName` | String | 
 `[ ].StarVal` | Int32 | 
 `[ ].Summary` | String | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `[ ].ParticipantNum` | Int32 | 
 `[ ].ButtonText` | String | 
 `[ ].CanClick` | Boolean | 
@@ -1070,7 +1070,7 @@ variable | datatype | description
 `[ ].TitleImageFileName` | String | 
 `[ ].StarVal` | Int32 | 
 `[ ].Summary` | String | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `[ ].ParticipantNum` | Int32 | 
 `[ ].ButtonText` | String | 
 `[ ].CanClick` | Boolean | 
@@ -1361,7 +1361,7 @@ variable | datatype | description
 `[ ].NewsTypeID` | Int32 | 
 `[ ].TypeName` | String | 
 `[ ].ChannelID` | Int32 | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `[ ].Status` | Int32 | 
 
 ---
@@ -1674,4 +1674,4 @@ variable | datatype | description
 `[ ].AreaCode` | String | 
 `[ ].AreaName` | String | 
 `[ ].LevelNum` | Int32 | 
-`[ ].SortNum` | Int32 | 
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
