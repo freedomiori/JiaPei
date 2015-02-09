@@ -956,6 +956,128 @@ variable | datatype | description
 `[ ].EndDate` | DateTime | 
 
 
+### GetActivityList
+
+This http POST will be called to 获取某个活动类别下的活动列表数据
+
+```json
+POST api/Activity/GetActivityList
+```
+
+```json
+{
+"ActivityTypeID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetActivityListModel | 
+`ActivityTypeID` | Int32 | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 
+`[ ].URL` | String | 
+`[ ].Title` | String | 
+`[ ].TitleImageFileName` | String | 
+`[ ].StarVal` | Int32 | 
+`[ ].Summary` | String | 
+`[ ].SortNum` | Int32 | 
+`[ ].ParticipantNum` | Int32 | 
+`[ ].ButtonText` | String | 
+`[ ].CanClick` | Boolean | 
+`[ ].StartDate` | DateTime | 
+`[ ].EndDate` | DateTime | 
+
+
+### GetCollectedActivityList
+
+This http POST will be called to 获取有趣的活动列表数据
+
+```json
+POST api/Activity/GetCollectedActivityList
+```
+
+```json
+{
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | PagedModel | 
+`Skip` | Int32 | 
+`Take` | Int32 | 
+
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 
+`[ ].URL` | String | 
+`[ ].Title` | String | 
+`[ ].TitleImageFileName` | String | 
+`[ ].StarVal` | Int32 | 
+`[ ].Summary` | String | 
+`[ ].SortNum` | Int32 | 
+`[ ].ParticipantNum` | Int32 | 
+`[ ].ButtonText` | String | 
+`[ ].CanClick` | Boolean | 
+`[ ].StartDate` | DateTime | 
+`[ ].EndDate` | DateTime | 
+
+
 ### Collect
 
 This http POST will be called to 收藏某个活动
@@ -1413,12 +1535,12 @@ variable | datatype | description
 `this` | Boolean | 
 
 
-### GetCollectedActivityList
+### GetCollectedNewsList
 
 This http POST will be called to 获取有用的咨询列表数据
 
 ```json
-POST api/News/GetCollectedActivityList
+POST api/News/GetCollectedNewsList
 ```
 
 ```json
