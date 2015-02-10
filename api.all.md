@@ -275,7 +275,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 返回是否发送成功
+`this` | Boolean | 返回是否发送成功, 0 false, 1 success, 需要判断是否返回error
 
 ---
 ### ResetPassword
@@ -310,7 +310,7 @@ true
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
+`this` | Boolean | 返回是否成功, 0 false, 1 success, 需要判断是否返回error
 
 ===
 ## Topic
@@ -379,7 +379,7 @@ variable | datatype | description
 ---
 ### Delete
 
-This http POST will be called to 删除咨询
+This http POST will be called to 删除资讯
 
 ```json
 POST api/Topic/Delete
@@ -542,7 +542,7 @@ variable | datatype | description
 ---
 ### GetMyTopicMessages
 
-This http POST will be called to 获取我的评论消息
+This http POST will be called to 获取我的评论消息，有话说功能的消息列表。
 
 ```json
 POST api/Topic/GetMyTopicMessages
@@ -665,7 +665,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ChannelItemModel >  | 
 `[ ].ChannelID` | Int32 | 频道ID
-`[ ].NewsTypeID` | Int32 | 咨询类别ID
+`[ ].NewsTypeID` | Int32 | 资讯类别ID
 `[ ].IconTag` | String | 图标的标识
 `[ ].ChannelTitle` | String | 频道标题
 `[ ].LatestTopicText` | String | 最新评论的文字，目前只获取类型为"text"的内容
@@ -697,7 +697,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < ChannelItemModel >  | 
 `[ ].ChannelID` | Int32 | 频道ID
-`[ ].NewsTypeID` | Int32 | 咨询类别ID
+`[ ].NewsTypeID` | Int32 | 资讯类别ID，目前热门频道不会挂钩资讯类别
 `[ ].IconTag` | String | 图标的标识
 `[ ].ChannelTitle` | String | 频道标题
 `[ ].LatestTopicText` | String | 最新评论的文字，目前只获取类型为"text"的内容
@@ -756,7 +756,7 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
 `[ ].ID` | Int32 | 话题ID,如：2
-`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID，此处应该一直为Null。
 `[ ].ChannelID` | Int32 | 频道ID
 `[ ].ChannelTitle` | String | 频道标题
 `[ ].GoodVal` | Int32 | 被赞的总数
@@ -1335,7 +1335,7 @@ variable | datatype | description
 
 ### GetAllNewsTypes
 
-This http POST will be called to 获取咨询类目列表
+This http POST will be called to 获取资讯类目列表
 
 ```json
 POST api/News/GetAllNewsTypes
@@ -1358,8 +1358,8 @@ POST api/News/GetAllNewsTypes
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsTypeModel >  | 
-`[ ].NewsTypeID` | Int32 | 咨询类别的ID
-`[ ].TypeName` | String | 咨询类别的名称
+`[ ].NewsTypeID` | Int32 | 资讯类别的ID
+`[ ].TypeName` | String | 资讯类别的名称
 `[ ].ChannelID` | Int32 | 频道ID
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 `[ ].Status` | Int32 | 状态值，0：未开始，1：正在进行，2：已经完成
@@ -1367,7 +1367,7 @@ variable | datatype | description
 ---
 ### GetNewsList
 
-This http POST will be called to 获取咨询列表，带分页
+This http POST will be called to 获取资讯列表，带分页
 
 ```json
 POST api/News/GetNewsList
@@ -1384,7 +1384,7 @@ POST api/News/GetNewsList
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetNewsListModel | 
-`NewsTypeID` | Int32 | 咨询类别ID
+`NewsTypeID` | Int32 | 资讯类别ID
 `Skip` | Int32 | 跳过条数，即从第几条开始
 `Take` | Int32 | 获取条数
 
@@ -1406,16 +1406,16 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 咨询ID
-`[ ].Title` | String | 咨询标题
-`[ ].Summary` | String | 咨询简介
+`[ ].NewsID` | Int32 | 资讯ID
+`[ ].Title` | String | 资讯标题
+`[ ].Summary` | String | 资讯简介
 `[ ].UsefulVal` | Int32 | 有用值
 `[ ].HasCollect` | Boolean | 是否已经收藏
 
 ---
 ### GetNewsListTop
 
-This http POST will be called to 获取咨询列表表头
+This http POST will be called to 获取资讯列表表头
 
 ```json
 POST api/News/GetNewsListTop
@@ -1431,7 +1431,7 @@ POST api/News/GetNewsListTop
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | GetNewsListTopModel | 
-`NewsTypeID` | Int32 | 咨询类别ID
+`NewsTypeID` | Int32 | 资讯类别ID
 `Count` | Int32 | 希望获取的最新发表话题的用户头像数
 
 
@@ -1455,7 +1455,7 @@ variable | datatype | description
 ---
 ### GetNewsDetail
 
-This http POST will be called to 获取咨询详细
+This http POST will be called to 获取资讯详细
 
 ```json
 POST api/News/GetNewsDetail
@@ -1470,7 +1470,7 @@ POST api/News/GetNewsDetail
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 咨询ID
+`NewsID` | Int32 | 资讯ID
 
 
 **Returns**
@@ -1494,19 +1494,19 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsDetailModel | 
-`Title` | String | 咨询标题
-`NewsTypeName` | String | 咨询类别名
+`Title` | String | 资讯标题
+`NewsTypeName` | String | 资讯类别名
 `NewsDetailItems` | IList < ContentItemModel >  | 
 `NewsDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `NewsDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `NewsDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`NextNewsID` | Nullable < Int32 >  | 下一条咨询ID
-`NextNewsTitle` | String | 下一条咨询标题
+`NextNewsID` | Nullable < Int32 >  | 下一条资讯ID
+`NextNewsTitle` | String | 下一条资讯标题
 
 ---
 ### SetCurrentStatus
 
-This http POST will be called to 设置当前状态，正在哪个咨询类目
+This http POST will be called to 设置当前状态，正在哪个资讯类目
 
 ```json
 POST api/News/SetCurrentStatus
@@ -1521,7 +1521,7 @@ POST api/News/SetCurrentStatus
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsTypeIDModel | 
-`NewsTypeID` | Int32 | 咨询类别ID
+`NewsTypeID` | Int32 | 资讯类别ID
 
 
 **Returns**
@@ -1537,7 +1537,7 @@ variable | datatype | description
 ---
 ### GetCollectedNewsList
 
-This http POST will be called to 获取有用的咨询列表数据
+This http POST will be called to 获取有用的资讯列表数据
 
 ```json
 POST api/News/GetCollectedNewsList
@@ -1574,16 +1574,16 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 咨询ID
-`[ ].Title` | String | 咨询标题
-`[ ].Summary` | String | 咨询简介
+`[ ].NewsID` | Int32 | 资讯ID
+`[ ].Title` | String | 资讯标题
+`[ ].Summary` | String | 资讯简介
 `[ ].UsefulVal` | Int32 | 有用值
 `[ ].HasCollect` | Boolean | 是否已收藏
 
 ---
 ### Collect
 
-This http POST will be called to 收藏某个咨询
+This http POST will be called to 收藏某个资讯
 
 ```json
 POST api/News/Collect
@@ -1598,7 +1598,7 @@ POST api/News/Collect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 咨询ID
+`NewsID` | Int32 | 资讯ID
 
 
 **Returns**
@@ -1614,7 +1614,7 @@ variable | datatype | description
 ---
 ### UnCollect
 
-This http POST will be called to 删除某个咨询的收藏
+This http POST will be called to 删除某个资讯的收藏
 
 ```json
 POST api/News/UnCollect
@@ -1629,7 +1629,7 @@ POST api/News/UnCollect
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | NewsIDModel | 
-`NewsID` | Int32 | 咨询ID
+`NewsID` | Int32 | 资讯ID
 
 
 **Returns**
