@@ -1675,3 +1675,43 @@ variable | datatype | description
 `[ ].AreaName` | String | 地区名
 `[ ].LevelNum` | Int32 | 地区级别，如浙江为1，杭州为2
 `[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+
+===
+## UI
+
+### SImage
+
+This http GET will be called to 获取50X50小图片
+
+```json
+GET UI/SImage/{filename}
+```
+
+------------------
+### MImage
+
+This http GET will be called to 获取100X100中图片
+
+```json
+GET UI/MImage/{filename}
+```
+
+------------------
+### BImage
+
+This http GET will be called to 获取大图片
+
+```json
+GET UI/BImage/{filename}
+```
+
+------------------
+### Image
+
+This http GET will be called to 获取图片
+
+```json
+GET UI/Image/{filename}?width={width(可选)}&height={height(可选)}
+```
+
+width，height为整数
