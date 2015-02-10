@@ -441,6 +441,11 @@ variable | datatype | description
  "ChannelTitle":"",
  "GoodVal":##,
  "UserID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
  "FeedbackNum":##,
  "CanGood":true,
  "PublishOn":"yyyy-MM-dd HH:mm:ss",
@@ -464,6 +469,10 @@ variable | datatype | description
 `[ ].ChannelTitle` | String | 频道标题
 `[ ].GoodVal` | Int32 | 被点赞的总数
 `[ ].UserID` | Int32 | 用户ID
+`[ ].Publisher` | Publisher | 
+`[ ].Publisher.UserID` | Int32 | 发布者的用户ID
+`[ ].Publisher.UserName` | String | 发布者的用户昵称
+`[ ].Publisher.PhotoFileName` | String | 发布者的头像文件名
 `[ ].FeedbackNum` | Int32 | 被回复的总数
 `[ ].CanGood` | Boolean | 是否可被点赞
 `[ ].PublishOn` | DateTime | 发布时间
@@ -508,6 +517,11 @@ variable | datatype | description
  "ChannelTitle":"",
  "GoodVal":##,
  "UserID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
  "FeedbackNum":##,
  "CanGood":true,
  "PublishOn":"yyyy-MM-dd HH:mm:ss",
@@ -525,14 +539,18 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 话题ID,如：2
+`[ ].ID` | Int32 | 话题ID
 `[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
 `[ ].ChannelID` | Int32 | 频道ID
 `[ ].ChannelTitle` | String | 频道标题
-`[ ].GoodVal` | Int32 | 被赞的总数
-`[ ].UserID` | Int32 | 发布话题的用户ID
-`[ ].FeedbackNum` | Int32 | 回复的总数
-`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].GoodVal` | Int32 | 被点赞的总数
+`[ ].UserID` | Int32 | 用户ID
+`[ ].Publisher` | Publisher | 
+`[ ].Publisher.UserID` | Int32 | 发布者的用户ID
+`[ ].Publisher.UserName` | String | 发布者的用户昵称
+`[ ].Publisher.PhotoFileName` | String | 发布者的头像文件名
+`[ ].FeedbackNum` | Int32 | 被回复的总数
+`[ ].CanGood` | Boolean | 是否可被点赞
 `[ ].PublishOn` | DateTime | 发布时间
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
@@ -738,6 +756,11 @@ variable | datatype | description
  "ChannelTitle":"",
  "GoodVal":##,
  "UserID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
  "FeedbackNum":##,
  "CanGood":true,
  "PublishOn":"yyyy-MM-dd HH:mm:ss",
@@ -755,14 +778,18 @@ variable | datatype | description
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 话题ID,如：2
-`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID，此处应该一直为Null。
+`[ ].ID` | Int32 | 话题ID
+`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
 `[ ].ChannelID` | Int32 | 频道ID
 `[ ].ChannelTitle` | String | 频道标题
-`[ ].GoodVal` | Int32 | 被赞的总数
-`[ ].UserID` | Int32 | 发布话题的用户ID
-`[ ].FeedbackNum` | Int32 | 回复的总数
-`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].GoodVal` | Int32 | 被点赞的总数
+`[ ].UserID` | Int32 | 用户ID
+`[ ].Publisher` | Publisher | 
+`[ ].Publisher.UserID` | Int32 | 发布者的用户ID
+`[ ].Publisher.UserName` | String | 发布者的用户昵称
+`[ ].Publisher.PhotoFileName` | String | 发布者的头像文件名
+`[ ].FeedbackNum` | Int32 | 被回复的总数
+`[ ].CanGood` | Boolean | 是否可被点赞
 `[ ].PublishOn` | DateTime | 发布时间
 `[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
@@ -806,39 +833,50 @@ variable | datatype | description
 **Returns**
 
 ```json
-{
-"ID":##,
-"ParentTopicID":##,
-"ChannelID":##,
-"ChannelTitle":"",
-"GoodVal":##,
-"UserID":##,
-"FeedbackNum":##,
-"CanGood":true,
-"PublishOn":"yyyy-MM-dd HH:mm:ss",
-"TopicDetailItems":[
-  {
-  "Type":"",
-  "Content":"",
-  "SortNum":##
-  }
- ]
-}
+[
+ {
+ "ID":##,
+ "ParentTopicID":##,
+ "ChannelID":##,
+ "ChannelTitle":"",
+ "GoodVal":##,
+ "UserID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
+ "FeedbackNum":##,
+ "CanGood":true,
+ "PublishOn":"yyyy-MM-dd HH:mm:ss",
+ "TopicDetailItems":[
+   {
+   "Type":"",
+   "Content":"",
+   "SortNum":##
+   }
+  ]
+ }
+]
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | TopicDetailModel | 
-`[ ].ID` | Int32 | 话题ID,如：2
+`this` | IList < TopicDetailModel >  | 
+`[ ].ID` | Int32 | 话题ID
 `[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
 `[ ].ChannelID` | Int32 | 频道ID
 `[ ].ChannelTitle` | String | 频道标题
-`[ ].GoodVal` | Int32 | 被赞的总数
-`[ ].UserID` | Int32 | 发布话题的用户ID
-`[ ].FeedbackNum` | Int32 | 回复的总数
-`[ ].CanGood` | Boolean | 是否可以被赞
+`[ ].GoodVal` | Int32 | 被点赞的总数
+`[ ].UserID` | Int32 | 用户ID
+`[ ].Publisher` | Publisher | 
+`[ ].Publisher.UserID` | Int32 | 发布者的用户ID
+`[ ].Publisher.UserName` | String | 发布者的用户昵称
+`[ ].Publisher.PhotoFileName` | String | 发布者的头像文件名
+`[ ].FeedbackNum` | Int32 | 被回复的总数
+`[ ].CanGood` | Boolean | 是否可被点赞
 `[ ].PublishOn` | DateTime | 发布时间
-`TopicDetailItems` | IList < ContentItemModel >  | 
+`[ ].TopicDetailItems` | IList < ContentItemModel >  | 
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
