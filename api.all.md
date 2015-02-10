@@ -781,19 +781,21 @@ variable | datatype | description
  "Title":"",
  "Summary":"",
  "UsefulVal":##,
- "HasCollect":true
+ "HasCollect":true,
+ "CollectOn":"yyyy-MM-dd HH:mm:ss"
  }
 ]
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | IList < NewsMainModel >  | 
+`this` | IList < CollectedNewsMainModel >  | 
 `[ ].NewsID` | Int32 | 资讯ID
 `[ ].Title` | String | 资讯标题
 `[ ].Summary` | String | 资讯简介
 `[ ].UsefulVal` | Int32 | 有用值
 `[ ].HasCollect` | Boolean | 是否已收藏
+`[ ].CollectOn` | DateTime | 收藏时间
 
 ---
 ### Collect
