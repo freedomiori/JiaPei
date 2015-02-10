@@ -2,19 +2,19 @@
 
 ### SImage
 
-This http GET will be called to 获取小图片
+This http GET will be called to 获取50X50小图片
 
 ```json
-GET UI/SImage?id={filename}
+GET UI/SImage/{filename}
 ```
 
 ------------------
 ### MImage
 
-This http GET will be called to 获取中图片
+This http GET will be called to 获取100X100中图片
 
 ```json
-GET UI/MImage?id={filename}
+GET UI/MImage/{filename}
 ```
 
 ------------------
@@ -23,5 +23,16 @@ GET UI/MImage?id={filename}
 This http GET will be called to 获取大图片
 
 ```json
-GET UI/BImage?id={filename}
+GET UI/BImage/{filename}
 ```
+
+------------------
+### Image
+
+This http GET will be called to 获取图片
+
+```json
+GET UI/Image/{filename}?width={width(可选)}&height={height(可选)}
+```
+
+width，height为整数
