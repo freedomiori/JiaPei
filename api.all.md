@@ -1,6 +1,79 @@
+# 接口模块说明
+本文档按照模块来分别定义了接口说明，具体如下：
+1. 通用接口：很多功能可能调用此处接口，如果在对应子模块找不到合适接口，请来此处查找。例如用来获取所有地区，图片，上传手机信    息并获取token
+2. 
 
-## Account
 
+## 通用模块
+
+### GetAllArea
+
+This http POST will be called to 获取所有地区数据
+
+```json
+POST api/Common/GetAllArea
+```
+
+**Returns**
+
+```json
+[
+ {
+ "AreaID":##,
+ "AreaCode":"",
+ "AreaName":"",
+ "LevelNum":##,
+ "SortNum":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < AreaModel >  | 
+`[ ].AreaID` | Int32 | 地区ID
+`[ ].AreaCode` | String | 地区编码，2位一个级别，如浙江为01，杭州为0101
+`[ ].AreaName` | String | 地区名
+`[ ].LevelNum` | Int32 | 地区级别，如浙江为1，杭州为2
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+
+===
+### Image
+
+This http GET will be called to 获取图片，server会根据输入的值来缩放图片，如原图：1000,1000 参数为500,250.  则返回 250，250
+
+```json
+GET UI/Image/{filename}?width={width(可选)}&height={height(可选)}
+```
+
+width，height为整数
+### SImage （建议使用imge）
+
+This http GET will be called to 获取50X50小图片
+
+```json
+GET UI/SImage/{filename}
+```
+
+------------------
+### MImage （建议使用imge）
+
+This http GET will be called to 获取100X100中图片
+
+```json
+GET UI/MImage/{filename}
+```
+
+------------------
+### BImage （建议使用imge）
+
+This http GET will be called to 获取大图片
+
+```json
+GET UI/BImage/{filename}
+```
+
+------------------
 ### GetToken
 
 This http POST will be called to 通过手机信息获取token
@@ -40,9 +113,12 @@ variable | datatype | description
 `this` | Guid | 返回token，客户端得到后放在header内,每次自动上传验证。
 
 ---
+
+## 个人中心
+
 ### GetInfo
 
-This http POST will be called to 获取个人信息(自动登录)
+This http POST will be called to 获取个人信息(供自动登录使用，未注册用户则返回Null)
 
 ```json
 POST api/Account/GetInfo
@@ -219,7 +295,7 @@ POST api/Account/Register
 variable | datatype | description
 :--------|:-----------|:-----------
 `this` | RegisterModel | 
-`UserName` | String | 用户昵称：如：Jessie
+`UserName` | String | 用户昵称：如：Jessie，可以重复
 `Password` | String | 用户密码
 
 
@@ -313,7 +389,805 @@ variable | datatype | description
 `this` | Boolean | 返回是否成功, 0 false, 1 success, 需要判断是否返回error
 
 ===
-## Topic
+### UploadPhoto
+
+This http POST will be called to 上传头像
+
+```json
+POST api/User/UploadPhoto
+```
+
+```json
+{
+"ImageExt":"",
+"Image":""
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ImageModel | 
+`ImageExt` | String | 图片后缀名，例如："jpg", ".jpg", "Jpg", "JPg"... 文件名不要上传。
+`Image` | String | 图片Base64编码
+
+
+**Returns**
+
+```json
+""
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | String | 返回图片文件名
+
+---
+### UpdateUserInfo
+
+This http POST will be called to 修改用户信息
+
+```json
+POST api/User/UpdateUserInfo
+```
+
+```json
+{
+"UserName":"",
+"OldPassword":"",
+"Password":"",
+"AreaID":##,
+"Gender":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | UpdateUserModel | 
+`UserName` | String | 用户昵称
+`OldPassword` | String | 原来的密码
+`Password` | String | 新密码
+`AreaID` | Nullable < Int32 >  | 地区ID
+`Gender` | Nullable < Int32 >  | 性别，男：0，女：1
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+===
+### GetNewMessageCount
+
+This http POST will be called to 获取新通知的数量
+
+```json
+POST api/Message/GetNewMessageCount
+```
+
+**Returns**
+
+```json
+##
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Int32 | 返回新通知的数量
+
+---
+### GetMessageList
+
+This http POST will be called to 获取所有通知列表
+
+```json
+POST api/Message/GetMessageList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "MessageID":##,
+ "MessageTitle":"",
+ "MessageContent":"",
+ "SendOn":"yyyy-MM-dd HH:mm:ss",
+ "IsGlobal":true,
+ "IsRead":true
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < MessageItemModel >  | 
+`[ ].MessageID` | Int32 | 消息ID
+`[ ].MessageTitle` | String | 消息标题
+`[ ].MessageContent` | String | 消息正文
+`[ ].SendOn` | DateTime | 消息发送时间
+`[ ].IsGlobal` | Boolean | 是否为全局消息
+`[ ].IsRead` | Boolean | 是否已读
+
+---
+### Delete
+
+This http POST will be called to 删除指定的通知
+
+```json
+POST api/Message/Delete
+```
+
+```json
+{
+"MessageID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | MessageIDModel | 
+`MessageID` | Int32 | 消息的ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+===
+
+## 资讯
+
+### GetAllNewsTypes
+
+This http POST will be called to 获取资讯类目列表
+
+```json
+POST api/News/GetAllNewsTypes
+```
+
+**Returns**
+
+```json
+[
+ {
+ "NewsTypeID":##,
+ "TypeName":"",
+ "ChannelID":##,
+ "SortNum":##,
+ "Status":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsTypeModel >  | 
+`[ ].NewsTypeID` | Int32 | 资讯类别的ID
+`[ ].TypeName` | String | 资讯类别的名称
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`[ ].Status` | Int32 | 状态值，0：未开始，1：正在进行，2：已经完成
+
+---
+### GetNewsList
+
+This http POST will be called to 获取资讯列表，带分页
+
+```json
+POST api/News/GetNewsList
+```
+
+```json
+{
+"NewsTypeID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetNewsListModel | 
+`NewsTypeID` | Int32 | 资讯类别ID
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
+
+
+**Returns**
+
+```json
+[
+ {
+ "NewsID":##,
+ "Title":"",
+ "Summary":"",
+ "UsefulVal":##,
+ "HasCollect":true
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsMainModel >  | 
+`[ ].NewsID` | Int32 | 资讯ID
+`[ ].Title` | String | 资讯标题
+`[ ].Summary` | String | 资讯简介
+`[ ].UsefulVal` | Int32 | 有用值
+`[ ].HasCollect` | Boolean | 是否已经收藏
+
+---
+### GetNewsListTop
+
+This http POST will be called to 获取资讯列表表头
+
+```json
+POST api/News/GetNewsListTop
+```
+
+```json
+{
+"NewsTypeID":##,
+"Count":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetNewsListTopModel | 
+`NewsTypeID` | Int32 | 资讯类别ID
+`Count` | Int32 | 希望获取的最新发表话题的用户头像数
+
+
+**Returns**
+
+```json
+{
+"TopicID":##,
+"UserPhotos":[
+""
+ ]
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsListTopModel | 
+`TopicID` | Int32 | 话题ID
+`UserPhotos` | IList < String >  | 发表话题的用户的头像文件名列表
+
+---
+### GetNewsDetail
+
+This http POST will be called to 获取资讯详细
+
+```json
+POST api/News/GetNewsDetail
+```
+
+```json
+{
+"NewsID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 资讯ID
+
+
+**Returns**
+
+```json
+{
+"Title":"",
+"NewsTypeName":"",
+"NewsDetailItems":[
+  {
+  "Type":"",
+  "Content":"",
+  "SortNum":##
+  }
+ ],
+"NextNewsID":##,
+"NextNewsTitle":""
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsDetailModel | 
+`Title` | String | 资讯标题
+`NewsTypeName` | String | 资讯类别名
+`NewsDetailItems` | IList < ContentItemModel >  | 
+`NewsDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`NewsDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`NewsDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`NextNewsID` | Nullable < Int32 >  | 下一条资讯ID
+`NextNewsTitle` | String | 下一条资讯标题
+
+---
+### SetCurrentStatus
+
+This http POST will be called to 设置当前状态，正在哪个资讯类目
+
+```json
+POST api/News/SetCurrentStatus
+```
+
+```json
+{
+"NewsTypeID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsTypeIDModel | 
+`NewsTypeID` | Int32 | 资讯类别ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+---
+### GetCollectedNewsList
+
+This http POST will be called to 获取有用的资讯列表数据
+
+```json
+POST api/News/GetCollectedNewsList
+```
+
+```json
+{
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | PagedModel | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
+
+
+**Returns**
+
+```json
+[
+ {
+ "NewsID":##,
+ "Title":"",
+ "Summary":"",
+ "UsefulVal":##,
+ "HasCollect":true
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < NewsMainModel >  | 
+`[ ].NewsID` | Int32 | 资讯ID
+`[ ].Title` | String | 资讯标题
+`[ ].Summary` | String | 资讯简介
+`[ ].UsefulVal` | Int32 | 有用值
+`[ ].HasCollect` | Boolean | 是否已收藏
+
+---
+### Collect
+
+This http POST will be called to 收藏某个资讯
+
+```json
+POST api/News/Collect
+```
+
+```json
+{
+"NewsID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 资讯ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+---
+### UnCollect
+
+This http POST will be called to 删除某个资讯的收藏
+
+```json
+POST api/News/UnCollect
+```
+
+```json
+{
+"NewsID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | NewsIDModel | 
+`NewsID` | Int32 | 资讯ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+===
+
+## 发现
+
+### GetCarouselList
+
+This http POST will be called to 获取轮播数据
+
+```json
+POST api/Activity/GetCarouselList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "ImageFileName":"",
+ "TagName":"",
+ "CarouselTitle":"",
+ "Url":"",
+ "SortNum":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityCarouselItemModel >  | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].ImageFileName` | String | 活动图片文件名
+`[ ].TagName` | String | 活动标签
+`[ ].CarouselTitle` | String | 活动标题
+`[ ].Url` | String | 活动跳转Url
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+
+---
+### GetTypeList
+
+This http POST will be called to 获取活动类别列表数据
+
+```json
+POST api/Activity/GetTypeList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityTypeID":##,
+ "TypeName":"",
+ "IconTag":"",
+ "SortNum":##
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityTypeItemModel >  | 
+`[ ].ActivityTypeID` | Int32 | 活动类别ID
+`[ ].TypeName` | String | 活动类别名
+`[ ].IconTag` | String | 活动类别图标标识
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+
+---
+### GetFrontList
+
+This http POST will be called to 获取首页活动列表数据
+
+```json
+POST api/Activity/GetFrontList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
+
+---
+### GetActivityList
+
+This http POST will be called to 获取某个活动类别下的活动列表数据
+
+```json
+POST api/Activity/GetActivityList
+```
+
+```json
+{
+"ActivityTypeID":##,
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | GetActivityListModel | 
+`ActivityTypeID` | Int32 | 活动类别ID
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
+
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
+
+---
+### GetCollectedActivityList
+
+This http POST will be called to 获取有趣的活动列表数据
+
+```json
+POST api/Activity/GetCollectedActivityList
+```
+
+```json
+{
+"Skip":##,
+"Take":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | PagedModel | 
+`Skip` | Int32 | 跳过条数，即从第几条开始
+`Take` | Int32 | 获取条数
+
+
+**Returns**
+
+```json
+[
+ {
+ "ActivityID":##,
+ "URL":"",
+ "Title":"",
+ "TitleImageFileName":"",
+ "StarVal":##,
+ "Summary":"",
+ "SortNum":##,
+ "ParticipantNum":##,
+ "ButtonText":"",
+ "CanClick":true,
+ "StartDate":"yyyy-MM-dd HH:mm:ss",
+ "EndDate":"yyyy-MM-dd HH:mm:ss"
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ActivityItemModel >  | 
+`[ ].ActivityID` | Int32 | 活动ID
+`[ ].URL` | String | 活动跳转的URL
+`[ ].Title` | String | 活动的标题
+`[ ].TitleImageFileName` | String | 活动的图片文件名
+`[ ].StarVal` | Int32 | 星值
+`[ ].Summary` | String | 活动简介
+`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`[ ].ParticipantNum` | Int32 | 活动当前参与人数
+`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
+`[ ].CanClick` | Boolean | 活动按钮是否可点击
+`[ ].StartDate` | DateTime | 活动开始时间
+`[ ].EndDate` | DateTime | 活动结束时间
+
+---
+### Collect
+
+This http POST will be called to 收藏某个活动
+
+```json
+POST api/Activity/Collect
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 活动ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+---
+### UnCollect
+
+This http POST will be called to 删除某个活动的收藏
+
+```json
+POST api/Activity/UnCollect
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 活动ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+---
+### Participant
+
+This http POST will be called to 参与某个活动
+
+```json
+POST api/Activity/Participant
+```
+
+```json
+{
+"ActivityID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | ActivityIDModel | 
+`ActivityID` | Int32 | 活动ID
+
+
+**Returns**
+
+```json
+true
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | Boolean | 返回是否成功
+
+===
+
+## 有话说
 
 ### SendGood
 
@@ -882,874 +1756,7 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
 
 ===
-## Activity
 
-### GetCarouselList
 
-This http POST will be called to 获取轮播数据
 
-```json
-POST api/Activity/GetCarouselList
-```
 
-**Returns**
-
-```json
-[
- {
- "ActivityID":##,
- "ImageFileName":"",
- "TagName":"",
- "CarouselTitle":"",
- "Url":"",
- "SortNum":##
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < ActivityCarouselItemModel >  | 
-`[ ].ActivityID` | Int32 | 活动ID
-`[ ].ImageFileName` | String | 活动图片文件名
-`[ ].TagName` | String | 活动标签
-`[ ].CarouselTitle` | String | 活动标题
-`[ ].Url` | String | 活动跳转Url
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-
----
-### GetTypeList
-
-This http POST will be called to 获取活动类别列表数据
-
-```json
-POST api/Activity/GetTypeList
-```
-
-**Returns**
-
-```json
-[
- {
- "ActivityTypeID":##,
- "TypeName":"",
- "IconTag":"",
- "SortNum":##
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < ActivityTypeItemModel >  | 
-`[ ].ActivityTypeID` | Int32 | 活动类别ID
-`[ ].TypeName` | String | 活动类别名
-`[ ].IconTag` | String | 活动类别图标标识
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-
----
-### GetFrontList
-
-This http POST will be called to 获取首页活动列表数据
-
-```json
-POST api/Activity/GetFrontList
-```
-
-**Returns**
-
-```json
-[
- {
- "ActivityID":##,
- "URL":"",
- "Title":"",
- "TitleImageFileName":"",
- "StarVal":##,
- "Summary":"",
- "SortNum":##,
- "ParticipantNum":##,
- "ButtonText":"",
- "CanClick":true,
- "StartDate":"yyyy-MM-dd HH:mm:ss",
- "EndDate":"yyyy-MM-dd HH:mm:ss"
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 活动ID
-`[ ].URL` | String | 活动跳转的URL
-`[ ].Title` | String | 活动的标题
-`[ ].TitleImageFileName` | String | 活动的图片文件名
-`[ ].StarVal` | Int32 | 星值
-`[ ].Summary` | String | 活动简介
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 活动当前参与人数
-`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
-`[ ].CanClick` | Boolean | 活动按钮是否可点击
-`[ ].StartDate` | DateTime | 活动开始时间
-`[ ].EndDate` | DateTime | 活动结束时间
-
----
-### GetActivityList
-
-This http POST will be called to 获取某个活动类别下的活动列表数据
-
-```json
-POST api/Activity/GetActivityList
-```
-
-```json
-{
-"ActivityTypeID":##,
-"Skip":##,
-"Take":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | GetActivityListModel | 
-`ActivityTypeID` | Int32 | 活动类别ID
-`Skip` | Int32 | 跳过条数，即从第几条开始
-`Take` | Int32 | 获取条数
-
-
-**Returns**
-
-```json
-[
- {
- "ActivityID":##,
- "URL":"",
- "Title":"",
- "TitleImageFileName":"",
- "StarVal":##,
- "Summary":"",
- "SortNum":##,
- "ParticipantNum":##,
- "ButtonText":"",
- "CanClick":true,
- "StartDate":"yyyy-MM-dd HH:mm:ss",
- "EndDate":"yyyy-MM-dd HH:mm:ss"
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 活动ID
-`[ ].URL` | String | 活动跳转的URL
-`[ ].Title` | String | 活动的标题
-`[ ].TitleImageFileName` | String | 活动的图片文件名
-`[ ].StarVal` | Int32 | 星值
-`[ ].Summary` | String | 活动简介
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 活动当前参与人数
-`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
-`[ ].CanClick` | Boolean | 活动按钮是否可点击
-`[ ].StartDate` | DateTime | 活动开始时间
-`[ ].EndDate` | DateTime | 活动结束时间
-
----
-### GetCollectedActivityList
-
-This http POST will be called to 获取有趣的活动列表数据
-
-```json
-POST api/Activity/GetCollectedActivityList
-```
-
-```json
-{
-"Skip":##,
-"Take":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | PagedModel | 
-`Skip` | Int32 | 跳过条数，即从第几条开始
-`Take` | Int32 | 获取条数
-
-
-**Returns**
-
-```json
-[
- {
- "ActivityID":##,
- "URL":"",
- "Title":"",
- "TitleImageFileName":"",
- "StarVal":##,
- "Summary":"",
- "SortNum":##,
- "ParticipantNum":##,
- "ButtonText":"",
- "CanClick":true,
- "StartDate":"yyyy-MM-dd HH:mm:ss",
- "EndDate":"yyyy-MM-dd HH:mm:ss"
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < ActivityItemModel >  | 
-`[ ].ActivityID` | Int32 | 活动ID
-`[ ].URL` | String | 活动跳转的URL
-`[ ].Title` | String | 活动的标题
-`[ ].TitleImageFileName` | String | 活动的图片文件名
-`[ ].StarVal` | Int32 | 星值
-`[ ].Summary` | String | 活动简介
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].ParticipantNum` | Int32 | 活动当前参与人数
-`[ ].ButtonText` | String | 活动按钮文字，如：已满，进行中。。。
-`[ ].CanClick` | Boolean | 活动按钮是否可点击
-`[ ].StartDate` | DateTime | 活动开始时间
-`[ ].EndDate` | DateTime | 活动结束时间
-
----
-### Collect
-
-This http POST will be called to 收藏某个活动
-
-```json
-POST api/Activity/Collect
-```
-
-```json
-{
-"ActivityID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | ActivityIDModel | 
-`ActivityID` | Int32 | 活动ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
----
-### UnCollect
-
-This http POST will be called to 删除某个活动的收藏
-
-```json
-POST api/Activity/UnCollect
-```
-
-```json
-{
-"ActivityID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | ActivityIDModel | 
-`ActivityID` | Int32 | 活动ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
----
-### Participant
-
-This http POST will be called to 参与某个活动
-
-```json
-POST api/Activity/Participant
-```
-
-```json
-{
-"ActivityID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | ActivityIDModel | 
-`ActivityID` | Int32 | 活动ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
-===
-## User
-
-### UploadPhoto
-
-This http POST will be called to 上传头像
-
-```json
-POST api/User/UploadPhoto
-```
-
-```json
-{
-"ImageExt":"",
-"Image":""
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | ImageModel | 
-`ImageExt` | String | 图片后缀名，例如："jpg", ".jpg", "Jpg", "JPg"...
-`Image` | String | 图片Base64编码
-
-
-**Returns**
-
-```json
-""
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | String | 返回图片文件名
-
----
-### UpdateUserInfo
-
-This http POST will be called to 修改用户信息
-
-```json
-POST api/User/UpdateUserInfo
-```
-
-```json
-{
-"UserName":"",
-"OldPassword":"",
-"Password":"",
-"AreaID":##,
-"Gender":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | UpdateUserModel | 
-`UserName` | String | 用户昵称
-`OldPassword` | String | 原来的密码
-`Password` | String | 新密码
-`AreaID` | Nullable < Int32 >  | 地区ID
-`Gender` | Nullable < Int32 >  | 性别，男：0，女：1
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
-===
-## Message
-
-### GetNewMessageCount
-
-This http POST will be called to 获取新通知的数量
-
-```json
-POST api/Message/GetNewMessageCount
-```
-
-**Returns**
-
-```json
-##
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Int32 | 返回新通知的数量
-
----
-### GetMessageList
-
-This http POST will be called to 获取所有通知列表
-
-```json
-POST api/Message/GetMessageList
-```
-
-**Returns**
-
-```json
-[
- {
- "MessageID":##,
- "MessageTitle":"",
- "MessageContent":"",
- "SendOn":"yyyy-MM-dd HH:mm:ss",
- "IsGlobal":true,
- "IsRead":true
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < MessageItemModel >  | 
-`[ ].MessageID` | Int32 | 消息ID
-`[ ].MessageTitle` | String | 消息标题
-`[ ].MessageContent` | String | 消息正文
-`[ ].SendOn` | DateTime | 消息发送时间
-`[ ].IsGlobal` | Boolean | 是否为全局消息
-`[ ].IsRead` | Boolean | 是否已读
-
----
-### Delete
-
-This http POST will be called to 删除指定的通知
-
-```json
-POST api/Message/Delete
-```
-
-```json
-{
-"MessageID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | MessageIDModel | 
-`MessageID` | Int32 | 消息的ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
-===
-## News
-
-### GetAllNewsTypes
-
-This http POST will be called to 获取资讯类目列表
-
-```json
-POST api/News/GetAllNewsTypes
-```
-
-**Returns**
-
-```json
-[
- {
- "NewsTypeID":##,
- "TypeName":"",
- "ChannelID":##,
- "SortNum":##,
- "Status":##
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < NewsTypeModel >  | 
-`[ ].NewsTypeID` | Int32 | 资讯类别的ID
-`[ ].TypeName` | String | 资讯类别的名称
-`[ ].ChannelID` | Int32 | 频道ID
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`[ ].Status` | Int32 | 状态值，0：未开始，1：正在进行，2：已经完成
-
----
-### GetNewsList
-
-This http POST will be called to 获取资讯列表，带分页
-
-```json
-POST api/News/GetNewsList
-```
-
-```json
-{
-"NewsTypeID":##,
-"Skip":##,
-"Take":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | GetNewsListModel | 
-`NewsTypeID` | Int32 | 资讯类别ID
-`Skip` | Int32 | 跳过条数，即从第几条开始
-`Take` | Int32 | 获取条数
-
-
-**Returns**
-
-```json
-[
- {
- "NewsID":##,
- "Title":"",
- "Summary":"",
- "UsefulVal":##,
- "HasCollect":true
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 资讯ID
-`[ ].Title` | String | 资讯标题
-`[ ].Summary` | String | 资讯简介
-`[ ].UsefulVal` | Int32 | 有用值
-`[ ].HasCollect` | Boolean | 是否已经收藏
-
----
-### GetNewsListTop
-
-This http POST will be called to 获取资讯列表表头
-
-```json
-POST api/News/GetNewsListTop
-```
-
-```json
-{
-"NewsTypeID":##,
-"Count":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | GetNewsListTopModel | 
-`NewsTypeID` | Int32 | 资讯类别ID
-`Count` | Int32 | 希望获取的最新发表话题的用户头像数
-
-
-**Returns**
-
-```json
-{
-"TopicID":##,
-"UserPhotos":[
-""
- ]
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsListTopModel | 
-`TopicID` | Int32 | 话题ID
-`UserPhotos` | IList < String >  | 发表话题的用户的头像文件名列表
-
----
-### GetNewsDetail
-
-This http POST will be called to 获取资讯详细
-
-```json
-POST api/News/GetNewsDetail
-```
-
-```json
-{
-"NewsID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsIDModel | 
-`NewsID` | Int32 | 资讯ID
-
-
-**Returns**
-
-```json
-{
-"Title":"",
-"NewsTypeName":"",
-"NewsDetailItems":[
-  {
-  "Type":"",
-  "Content":"",
-  "SortNum":##
-  }
- ],
-"NextNewsID":##,
-"NextNewsTitle":""
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsDetailModel | 
-`Title` | String | 资讯标题
-`NewsTypeName` | String | 资讯类别名
-`NewsDetailItems` | IList < ContentItemModel >  | 
-`NewsDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
-`NewsDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
-`NewsDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-`NextNewsID` | Nullable < Int32 >  | 下一条资讯ID
-`NextNewsTitle` | String | 下一条资讯标题
-
----
-### SetCurrentStatus
-
-This http POST will be called to 设置当前状态，正在哪个资讯类目
-
-```json
-POST api/News/SetCurrentStatus
-```
-
-```json
-{
-"NewsTypeID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsTypeIDModel | 
-`NewsTypeID` | Int32 | 资讯类别ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
----
-### GetCollectedNewsList
-
-This http POST will be called to 获取有用的资讯列表数据
-
-```json
-POST api/News/GetCollectedNewsList
-```
-
-```json
-{
-"Skip":##,
-"Take":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | PagedModel | 
-`Skip` | Int32 | 跳过条数，即从第几条开始
-`Take` | Int32 | 获取条数
-
-
-**Returns**
-
-```json
-[
- {
- "NewsID":##,
- "Title":"",
- "Summary":"",
- "UsefulVal":##,
- "HasCollect":true
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < NewsMainModel >  | 
-`[ ].NewsID` | Int32 | 资讯ID
-`[ ].Title` | String | 资讯标题
-`[ ].Summary` | String | 资讯简介
-`[ ].UsefulVal` | Int32 | 有用值
-`[ ].HasCollect` | Boolean | 是否已收藏
-
----
-### Collect
-
-This http POST will be called to 收藏某个资讯
-
-```json
-POST api/News/Collect
-```
-
-```json
-{
-"NewsID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsIDModel | 
-`NewsID` | Int32 | 资讯ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
----
-### UnCollect
-
-This http POST will be called to 删除某个资讯的收藏
-
-```json
-POST api/News/UnCollect
-```
-
-```json
-{
-"NewsID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | NewsIDModel | 
-`NewsID` | Int32 | 资讯ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
-===
-## Common
-
-### GetAllArea
-
-This http POST will be called to 获取所有地区数据
-
-```json
-POST api/Common/GetAllArea
-```
-
-**Returns**
-
-```json
-[
- {
- "AreaID":##,
- "AreaCode":"",
- "AreaName":"",
- "LevelNum":##,
- "SortNum":##
- }
-]
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | IList < AreaModel >  | 
-`[ ].AreaID` | Int32 | 地区ID
-`[ ].AreaCode` | String | 地区编码，2位一个级别，如浙江为01，杭州为0101
-`[ ].AreaName` | String | 地区名
-`[ ].LevelNum` | Int32 | 地区级别，如浙江为1，杭州为2
-`[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
-
-===
-## UI
-
-### SImage
-
-This http GET will be called to 获取50X50小图片
-
-```json
-GET UI/SImage/{filename}
-```
-
-------------------
-### MImage
-
-This http GET will be called to 获取100X100中图片
-
-```json
-GET UI/MImage/{filename}
-```
-
-------------------
-### BImage
-
-This http GET will be called to 获取大图片
-
-```json
-GET UI/BImage/{filename}
-```
-
-------------------
-### Image
-
-This http GET will be called to 获取图片
-
-```json
-GET UI/Image/{filename}?width={width(可选)}&height={height(可选)}
-```
-
-width，height为整数
