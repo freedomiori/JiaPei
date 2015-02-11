@@ -5,7 +5,7 @@
 
 2. 个人中心：列出登陆、注册、找回、通知、头像、个人信息等接口，现在还缺少关于我们、当前版本接口、更新
 
-3. 资讯： 列出获取资讯分类、设置里程碑、获取资讯列表、获取资讯对应话题列表、获取资讯详情、有用、没用。GetCollectedNewsList接口需要修改。
+3. 资讯： 列出获取资讯分类、设置里程碑、获取资讯列表、获取资讯对应话题列表、获取资讯详情、有用、没用。
 
 4. 发现： 列出Carousel轮播列表、活动分类、发现首页的活动列表、具体分类的列表、参加。 
 收藏某个活动，触发条件：
@@ -14,9 +14,7 @@
 
 5. 有话说：列出官方频道列表，热门推荐列表，话题列表，我的消息列表、评论我的消息概述、评论我的消息详情、点赞、删除。
 
-缺少：查看更多官方频道，话题明细。 修改：SubmitTopic
-
-返回值只需要返回是否成功。GetMyTopicList，返回值的昵称，头像应该不需要。
+修改：GetMyTopicList，返回值的昵称，头像应该不需要。
 
 
 
@@ -593,6 +591,8 @@ variable | datatype | description
  "Summary":"",
  "UsefulVal":##,
  "HasCollect":true,
+ "NewsTypeID":##,
+ "NewsTypeName":"",
  "CollectOn":"yyyy-MM-dd HH:mm:ss"
  }
 ]
@@ -606,6 +606,8 @@ variable | datatype | description
 `[ ].Summary` | String | 资讯简介
 `[ ].UsefulVal` | Int32 | 有用值   暂时不用使用
 `[ ].HasCollect` | Boolean | 是否已收藏  暂时不用使用
+`[ ].NewsTypeID` | Int32 | 资讯类别ID   暂时不用使用
+`[ ].NewsTypeName` | String | 资讯类别名称
 `[ ].CollectOn` | DateTime | 收藏时间
 
 ---
@@ -1174,37 +1176,6 @@ variable | datatype | description
 :--------|:-----------|:-----------
 `this` | Boolean | 返回是否成功
 
----
-### Participant
-
-This http POST will be called to 参与某个活动
-
-```json
-POST api/Activity/Participant
-```
-
-```json
-{
-"ActivityID":##
-}
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | ActivityIDModel | 
-`ActivityID` | Int32 | 活动ID
-
-
-**Returns**
-
-```json
-true
-```
-
-variable | datatype | description
-:--------|:-----------|:-----------
-`this` | Boolean | 返回是否成功
-
 ===
 
 ## 有话说
@@ -1215,6 +1186,38 @@ This http POST will be called to 获取上面部分的频道列表
 
 ```json
 POST api/Topic/GetTopChannelList
+```
+
+**Returns**
+
+```json
+[
+ {
+ "ChannelID":##,
+ "NewsTypeID":##,
+ "IconTag":"",
+ "ChannelTitle":"",
+ "LatestTopicText":""
+ }
+]
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | IList < ChannelItemModel >  | 
+`[ ].ChannelID` | Int32 | 频道ID
+`[ ].NewsTypeID` | Int32 | 资讯类别ID
+`[ ].IconTag` | String | 图标的标识
+`[ ].ChannelTitle` | String | 频道标题
+`[ ].LatestTopicText` | String | 最新评论的文字，目前只获取类型为"text"的内容
+
+---
+### GetAllTopChannelList
+
+This http POST will be called to 获取所有官方频道列表
+
+```json
+POST api/Topic/GetAllTopChannelList
 ```
 
 **Returns**
@@ -1385,53 +1388,12 @@ variable | datatype | description
 **Returns**
 
 ```json
-[
- {
- "ID":##,
- "ParentTopicID":##,
- "ChannelID":##,
- "ChannelTitle":"",
- "GoodVal":##,
- "UserID":##,
- "Publisher":  {
-  "UserID":##,
-  "UserName":"",
-  "PhotoFileName":""
-  },
- "FeedbackNum":##,
- "CanGood":true,
- "PublishOn":"yyyy-MM-dd HH:mm:ss",
- "TopicDetailItems":[
-   {
-   "Type":"",
-   "Content":"",
-   "SortNum":##
-   }
-  ]
- }
-]
+true
 ```
 
 variable | datatype | description
 :--------|:-----------|:-----------
-`this` | IList < TopicDetailModel >  | 
-`[ ].ID` | Int32 | 话题ID
-`[ ].ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID
-`[ ].ChannelID` | Int32 | 频道ID
-`[ ].ChannelTitle` | String | 频道标题
-`[ ].GoodVal` | Int32 | 被点赞的总数
-`[ ].UserID` | Int32 | 用户ID
-`[ ].Publisher` | Publisher | 
-`[ ].Publisher.UserID` | Int32 | 发布者的用户ID
-`[ ].Publisher.UserName` | String | 发布者的用户昵称
-`[ ].Publisher.PhotoFileName` | String | 发布者的头像文件名
-`[ ].FeedbackNum` | Int32 | 被回复的总数
-`[ ].CanGood` | Boolean | 是否可被点赞
-`[ ].PublishOn` | DateTime | 发布时间
-`[ ].TopicDetailItems` | IList < ContentItemModel >  | 
-`[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
-`[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
-`[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+`this` | Boolean | 返回是否成功
 
 ===
 ### SendGood
@@ -1698,6 +1660,76 @@ variable | datatype | description
 `[ ].TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
 `[ ].TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
 `[ ].TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序
+
+---
+### GetTopicDetail
+
+This http POST will be called to 获取话题明细
+
+```json
+POST api/Topic/GetTopicDetail
+```
+
+```json
+{
+"TopicID":##
+}
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | TopicIDModel | 
+`TopicID` | Int32 | 话题ID， 如：2
+
+
+**Returns**
+
+```json
+{
+ "ID":##,
+ "ParentTopicID":##,
+ "ChannelID":##,
+ "ChannelTitle":"",
+ "GoodVal":##,
+ "UserID":##,
+ "Publisher":  {
+  "UserID":##,
+  "UserName":"",
+  "PhotoFileName":""
+  },
+ "FeedbackNum":##,
+ "CanGood":true,
+ "PublishOn":"yyyy-MM-dd HH:mm:ss",
+ "TopicDetailItems":[
+   {
+   "Type":"",
+   "Content":"",
+   "SortNum":##
+   }
+  ]
+ }
+```
+
+variable | datatype | description
+:--------|:-----------|:-----------
+`this` | TopicDetailModel | 
+`ID` | Int32 | 话题ID
+`ParentTopicID` | Nullable < Int32 >  | 被回复的话题ID 暂时不用
+`ChannelID` | Int32 | 频道ID
+`ChannelTitle` | String | 频道标题 暂时不用
+`GoodVal` | Int32 | 被点赞的总数 暂时不用
+`UserID` | Int32 | 用户ID
+`Publisher` | Publisher | 
+`Publisher.UserID` | Int32 | 发布者的用户ID
+`Publisher.UserName` | String | 发布者的用户昵称
+`Publisher.PhotoFileName` | String | 发布者的头像文件名
+`FeedbackNum` | Int32 | 被回复的总数 暂时不用
+`CanGood` | Boolean | 是否可被点赞
+`PublishOn` | DateTime | 发布时间
+`TopicDetailItems` | IList < ContentItemModel >  | 
+`TopicDetailItems[ ].Type` | String | 类型，目前为2种，"text":文本；"image"：图片
+`TopicDetailItems[ ].Content` | String | 当类型为"text"时，该处为实际文本的内容，当类型为"image"时，该处为图片的名字
+`TopicDetailItems[ ].SortNum` | Int32 | 排序值，从小到大，服务器端已根据这个排序---
 
 ---
 ### GetFeedbackList
